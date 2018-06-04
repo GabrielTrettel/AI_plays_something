@@ -24,7 +24,7 @@ def screen_record():
     while(True):
         # 86,248,486,316 windowed mode for TV           Gabriel T.
         # 133,212,550,318 windowed mode for monitor  178,142,329,184   Gabriel T.
-        #                                               Erick S.
+        # 170,356,786,501                               Erick S.
         #
         #                                            xi, yi, xii,yii
         printscreen =  np.array(ImageGrab.grab(bbox=(65,296,612,406)))
