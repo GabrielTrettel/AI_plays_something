@@ -7,7 +7,7 @@ def train_skills(training_data='balanced_training_data.npy'):
 	HEIGHT = 16
 	LR = 1e-3
 	EPOCHS = 8
-	MODEL_NAME = 'pyDinoRunner-{}-{}-{}-epochs.model'.format(LR, 'alexnetv2', EPOCHS)
+	MODEL_NAME = 'pyDinoRunn-{}-{}-{}-epochs.model'.format(LR, 'alexnetv2', EPOCHS)
 
 	model = alexnet(WIDTH, HEIGHT, LR)
 
