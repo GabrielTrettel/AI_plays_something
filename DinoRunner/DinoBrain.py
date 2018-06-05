@@ -27,7 +27,6 @@ def train_skills(training_data='balanced_training_data.npy'):
 	model.fit({'input': X}, {'targets': Y}, n_epoch=EPOCHS, validation_set=({'input': test_x}, {'targets': test_y}), 
     snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
-	
 	model.save(MODEL_NAME)
 
 	return MODEL_NAME
