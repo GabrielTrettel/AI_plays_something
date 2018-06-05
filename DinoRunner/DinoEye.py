@@ -8,7 +8,8 @@ def screen_record():
 	with mss.mss() as sct:
 		# Screen config for Gabriel T: 'top': 250, 'left': 90, 'width': 512, 'height': 96
 		# Screen config for Gabriel T:
-		monitor = {'top': 250, 'left': 90, 'width': 512, 'height': 96}
+		# Screen config for Eric S: 'top': 350, 'left': 179, 'width': 613, 'height': 159
+		monitor = {'top': 350, 'left': 179, 'width': 613, 'height': 159}
 		img = numpy.array(sct.grab(monitor))
 
 
@@ -22,7 +23,7 @@ def screen_record():
 
 
 
-def keybord_record():
+def keyboard_record():
 	record = kb.get_hotkey_name()
 	if record == "up":
 		return [1,0]

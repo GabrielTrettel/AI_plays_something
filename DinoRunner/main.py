@@ -1,5 +1,5 @@
 from DinoEye import screen_record
-from DinoEye import keybord_record
+from DinoEye import keyboard_record
 import numpy as np
 import os
 import cv2
@@ -23,7 +23,7 @@ class Dino:
 
 			# returns [1,0] for up, [0,1] for down and [0,0] for nothing
 			keys = [0,0]
-			keys = keybord_record()
+			keys = keyboard_record()
 
 			training_data.append([image, keys])
 
