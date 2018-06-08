@@ -1,15 +1,15 @@
 import numpy as np
 from alexnet import alexnet
 
+WIDTH = 85
+HEIGHT = 16
+LR = 1e-3
+EPOCHS = 8
+model = alexnet(WIDTH, HEIGHT, LR)
 
 def train_skills(training_data='balanced_training_data.npy'):
-	WIDTH = 85
-	HEIGHT = 16
-	LR = 1e-3
-	EPOCHS = 8
+	
 	MODEL_NAME = 'pyDinoRunn-{}-{}-{}-epochs.model'.format(LR, 'alexnetv2', EPOCHS)
-
-	model = alexnet(WIDTH, HEIGHT, LR)
 
 	train_data = np.load(training_data)
 
@@ -30,3 +30,17 @@ def train_skills(training_data='balanced_training_data.npy'):
 	model.save(MODEL_NAME)
 
 	return MODEL_NAME
+
+def load_memory(model_name='pyDinoRunner-0.001-alexnetv2-8-epochs.model'):
+	model.load(model_name)
+
+def survival_skills(image):
+
+	moves = list(np.around(model.predict([image.reshape(WIDTH,HEIGHT,1)])[0]))
+
+	if moves == [1,0]:
+		return 'up'
+	elif moves == [0,1]:
+		return 'down'
+	else:
+		return 'not'
