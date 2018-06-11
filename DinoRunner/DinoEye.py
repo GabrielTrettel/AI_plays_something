@@ -26,7 +26,7 @@ def eye_calibration():
 		cv2.imshow('window', processed_img)
 		if cv2.waitKey(25) & 0xFF == ord('q'):
 			cv2.destroyAllWindows()
-			break	
+			break
 
 
 def vision():
@@ -54,13 +54,28 @@ def vision():
 
 def keyboard_record():
 	record = kb.get_hotkey_name()
+
 	if record == "up":
-		return [1,0]
+		return [1,0,0]
 	elif record == "down":
-		return [0,1]
+		return [0,1,0]
 	elif record == "p":
-		return [5,5]
+		return [5,5,5]
 	elif record == "s":
-		return [6,6]
+		return [6,6,6]
 	else:
-		return [0,0]
+		return [0,0,1]  
+
+
+
+
+
+
+
+
+
+
+
+
+
+		#

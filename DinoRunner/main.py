@@ -17,7 +17,7 @@ class Dino:
 		else:
 			print('File does not exist, starting fresh')
 			training_data = []
-			
+
 
 		stopped = False
 		paused = False
@@ -25,7 +25,7 @@ class Dino:
 		while not stopped:
 
 			image_and_action = vision()
-	
+
 			if image_and_action[1] == [5,5]:   # pause/run the process
 				if paused:
 					paused = False
@@ -51,26 +51,29 @@ class Dino:
 				cv2.imshow('window', image_and_action[0])
 				if cv2.waitKey(25) & 0xFF == ord('q'):
 					cv2.destroyAllWindows()
-					break				
+					break
 
 
 	def trainJumpSkill(self, training_data="balanced_training_data.npy"):
 		jump_skill = train_skills()
-		print(jump_skill)
+		# print(jump_skill)
+
 		return jump_skill
 
 
-	def survive(self, model_file):
+	def survive(self, model):
 		# load_memory(model_file)
 		WIDTH = 85
 		HEIGHT = 16
 		LR = 1e-3
-		EPOCHS = 8
+		EPOCHS = 3
 
-		model = alexnet(WIDTH, HEIGHT, LR)
+		# model = alexnet(WIDTH, HEIGHT, LR)
+		model_file = 'pyDinoRunn-0.001-alexnetv2-8-epochs.model'
+
 		print("\n\nfuncionou\n\n")
-		
-		model.load(model_file)
+
+		# model.load(model_file)
 
 		print("\n------------------------------------------\n")
 		print("Loading model file {}".format(model_file))
@@ -84,7 +87,7 @@ class Dino:
 		while not stopped:
 
 			image_and_action = vision()
-	
+
 			if image_and_action[1] == [5,5]:   # pause/run the process
 				if paused:
 					paused = False
@@ -120,7 +123,7 @@ class Dino:
 
 
 if __name__ == '__main__':
-	
+
 	train_file = "training_data-apagar.npy"
 	dino = Dino()
 
@@ -129,8 +132,10 @@ if __name__ == '__main__':
 	balanced_file = "balanced_training_data.npy"
 	# balanced_file = balance_data(train_file)
 
-	# model_file = 'pyDinoRunn-0.001-alexnetv2-8-epochs.model'
-	model_file = dino.trainJumpSkill(training_data=balanced_file)
+	model_file = 'pyDinoRunn-0.001-alexnetv2-8-epochs.model'
 
+	model = dino.trainJumpSkill(training_data=balanced_file)
 
-	dino.survive(model_file)
+	print("MODEL FILE!!! : {}".format(model_file))
+
+	dino.survive(model)

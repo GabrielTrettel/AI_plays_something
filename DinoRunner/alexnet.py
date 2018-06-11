@@ -13,24 +13,27 @@ from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 from tflearn.layers.normalization import local_response_normalization
 
-def alexnet(width, height, lr):
+
+
+
+def alexnet(width, height, lr, N_CLASSES=3):
     network = input_data(shape=[None, width, height, 1], name='input')
     network = conv_2d(network, 96, 11, strides=4, activation='relu')
-    network = max_pool_2d(network, 2, strides=2)
+    network = max_pool_2d(network, N_CLASSES, strides=2)
     network = local_response_normalization(network)
     network = conv_2d(network, 256, 5, activation='relu')
-    network = max_pool_2d(network, 2, strides=2)
+    network = max_pool_2d(network, N_CLASSES, strides=2)
     network = local_response_normalization(network)
-    network = conv_2d(network, 384, 2, activation='relu')
-    network = conv_2d(network, 384, 2, activation='relu')
-    network = conv_2d(network, 256, 2, activation='relu')
-    network = max_pool_2d(network, 2, strides=2)
+    network = conv_2d(network, 384, N_CLASSES, activation='relu')
+    network = conv_2d(network, 384, N_CLASSES, activation='relu')
+    network = conv_2d(network, 256, N_CLASSES, activation='relu')
+    network = max_pool_2d(network, N_CLASSES, strides=2)
     network = local_response_normalization(network)
     network = fully_connected(network, 4096, activation='tanh')
     network = dropout(network, 0.5)
     network = fully_connected(network, 4096, activation='tanh')
     network = dropout(network, 0.5)
-    network = fully_connected(network, 2, activation='softmax')
+    network = fully_connected(network, N_CLASSES, activation='softmax')
     network = regression(network, optimizer='momentum',
                          loss='categorical_crossentropy',
                          learning_rate=lr, name='targets')

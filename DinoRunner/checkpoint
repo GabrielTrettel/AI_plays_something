@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/ufabc/Documentos/IA_plays_something/DinoRunner/pyDinoRunn-0.001-alexnetv2-3-epochs.model"
+all_model_checkpoint_paths: "/home/ufabc/Documentos/IA_plays_something/DinoRunner/pyDinoRunn-0.001-alexnetv2-3-epochs.model"
