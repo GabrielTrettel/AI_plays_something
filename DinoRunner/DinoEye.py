@@ -21,7 +21,7 @@ def eye_calibration():
 		img = np.array(screen)
 		processed_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 		processed_img = cv2.bilateralFilter(processed_img, 3, 75, 75)
-		processed_img = cv2.resize(processed_img, (85,16))
+		processed_img = cv2.resize(processed_img, (102,25))
 
 		cv2.imshow('window', processed_img)
 		if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -37,7 +37,7 @@ def vision():
 		monitor = {'top': 350, 'left': 179, 'width': 613, 'height': 159}
 		screen = sct.grab(monitor)
 
-	keys = [0,0]
+	keys = [0,0,0]
 	keys = keyboard_record()
 
 	img = np.array(screen)
@@ -64,7 +64,7 @@ def keyboard_record():
 	elif record == "s":
 		return [6,6,6]
 	else:
-		return [0,0,1]  
+		return [0,0,1]
 
 
 

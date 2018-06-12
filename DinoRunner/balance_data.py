@@ -33,13 +33,13 @@ def balance_data(verbose=True, train_file='training_data.npy'):
 		img = data[0]
 		choice = data[1]
 
-		if choice == [0,0]:
+		if choice == [0,0,1]:
 			walks.append([img, choice])
 
-		elif choice == [1,0]:
+		elif choice == [1,0,0]:
 			ups.append([img, choice])
 
-		elif choice == [0,1]:
+		elif choice == [0,1,0]:
 			downs.append([img, choice])
 
 		else:
@@ -59,7 +59,7 @@ def balance_data(verbose=True, train_file='training_data.npy'):
 	np.save(save_file, final_data)
 
 	if verbose:
-		print("Initial train data len: ", len(train_data))
+		print("\nInitial train data len: ", len(train_data))
 		print("Final train data len: ", len(final_data))
 		print(df.head())
 		print(Counter(df[1].apply(str)))

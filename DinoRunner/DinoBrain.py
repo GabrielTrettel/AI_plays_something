@@ -4,11 +4,12 @@ from alexnet import alexnet
 WIDTH = 85
 HEIGHT = 16
 LR = 1e-3
-EPOCHS = 3
+EPOCHS = 8
 N_CLASSES = 3
 model = alexnet(WIDTH, HEIGHT, LR, N_CLASSES)
 
-def train_skills(training_data='balanced_training_data.npy'):
+def train_skills(training_data='balanced_training_data-3classes.npy'):
+
 
 	MODEL_NAME = 'pyDinoRunn-{}-{}-{}-epochs.model'.format(LR, 'alexnetv2', EPOCHS)
 
@@ -25,10 +26,10 @@ def train_skills(training_data='balanced_training_data.npy'):
 	test_x = np.array([i[0] for i in test]).reshape(-1, WIDTH, HEIGHT, 1)
 	test_y = np.array([i[1] for i in test])
 
-	model.fit({'input': X}, {'targets': Y}, n_epoch=EPOCHS, validation_set=({'input': test_x}, {'targets': test_y}),
-    snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
-	model.save(MODEL_NAME)
+	model.fit({'input': X}, {'targets': Y}, n_epoch=EPOCHS, validation_set=({'input': test_x}, {'targets': test_y}), snapshot_step=500, show_metric=True, run_id="model3")
+
+	model.save("modelo.tfl")
 
 	return model
 
