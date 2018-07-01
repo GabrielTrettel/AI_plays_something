@@ -1,13 +1,13 @@
 public class Console {
-	
-	public void imprimeJogo(Tabuleiro t) {
-		
+
+	public void imprimeJogo() {
+
 
 		System.out.println("rodada x");
 
 
 		System.out.printf("-------------------\n");
-		System.out.printf("|  %c  |  %c  |  %c  |\n", t.getPos(0,0), ' ','O' );
+		System.out.printf("|  %c  |  %c  |  %c  |\n", 'X', ' ','O' );
 		System.out.printf("-------------------\n");
 		System.out.printf("|  %c  |  %c  |  %c  |\n", ' ', 'X','O');
 		System.out.printf("-------------------\n");
@@ -15,4 +15,3 @@ public class Console {
 		System.out.printf("-------------------\n");
 	}
 }
-
