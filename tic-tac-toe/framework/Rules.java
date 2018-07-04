@@ -9,21 +9,48 @@ class Rules {
         truir a GUI.
     **/
 
-    // Da matriz 3x3 numerica de testes,
-    protected Jogador jogador1;
-    protected Jogador jogador2;
-    int game_status;
+    private int game_status;
+    private Tabuleiro tabuleiro;
 
-    public Rules(Jogador j1, Jogador j2) {
+    public Rules() {
         this.jogador1 = j1;
         this.jogador2 = j2;
-        boolean game_status = true;
+        tabuleiro = new Tabuleiro();
+        game_status = true;
+    }
+    public boolean getGameStatus() {
+        return this.game_status;
     }
 
-    public boolean jogada(Tabuleiro tabuleiro, int cordX, int cordY) {
+    // Efetua a jogada que o usuário está tentando fazer
+    public boolean fazJogada(Jogador j, int cordX, int cordY) {
+        if(!validaJogada(tabuleiro, cordX, cordY))
+            return false;
+
         //TODO
 
         return true;
     }
+
+
+    // Valida se algém ganhou ou se deu velha
+    public boolean validade() {
+        //TODO
+        return true;
+    }
+
+    // Verifica se a jogada que o usuário pretende fazer é válida
+    private boolean validaJogada(int cordX, int cordY) {
+        //TODO
+        if()
+
+
+        return false;
+    }
+
+    public void imprimeTabuleiro() {
+        tabuleiro.imprimeJogo();
+    }
+
 
 }
