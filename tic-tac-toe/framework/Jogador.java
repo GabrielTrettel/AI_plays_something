@@ -36,10 +36,28 @@ class Jogador {
     }
 
 
-    public getJogada() {
+    public int getJogadaY() {
         Scanner sc1 = new Scanner(System.in);
-        String textoString = "";
-        Scanner sc2 = new Scanner(textoString);
+        System.out.printf("%s escolha a coluna: ", this.nome);
+        int a = sc1.nextInt();
+
+        while(a>2 || a<0) {
+            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getNome());
+            a = sc1.nextInt();
+        }
+        return a;
+    }
+
+    public int getJogadaX() {
+        Scanner sc1 = new Scanner(System.in);
+        System.out.printf("%s escolha a linha: ", this.nome);
+        int a = sc1.nextInt();
+
+        while(a>2 || a<0) {
+            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getNome());
+            a = sc1.nextInt();
+        }
+        return a;
     }
 
 }
