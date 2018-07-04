@@ -27,7 +27,7 @@ class Rules {
     // Efetua a jogada que o usuário está tentando fazer
     public boolean fazJogada(Jogador j, int cordX, int cordY) {
         if(!validaJogada(t, cordX, cordY)) {
-            
+
             return false;
         }
 
@@ -73,9 +73,16 @@ class Rules {
 
 
     private void parabenizaJogador(int x, Jogador j1) {
-        System.out.printf("O jogador %s ganhou o jogo!\n", j1.getNome());
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", j1.getNome());
     }
-
 
 
     public void imprimeTabuleiro() {

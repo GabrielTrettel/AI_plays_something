@@ -74,11 +74,22 @@ class Tabuleiro {
     public void imprimeJogo(Jogador j1, Jogador j2) {
 
         // System.out.printf("Rodada %d\n", rodada);
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+        System.out.print("\33[1A\33[2K");
+
         System.out.println(":  0    1    2");
-        System.out.println(":  -------------");
+        System.out.println(":---------------");
         System.out.printf(":0 | %c | %c | %c |\n", cIc(t[0][0], j1, j2), cIc(t[0][1], j1, j2), cIc(t[0][2], j1, j2));
-        System.out.println(":  -------------");
-        System.out.printf(":1 | %c | %c | %c |\n", cIc(t[1][0], j1, j2), cIc(t[1][1], j1, j2), cIc(t[1][2], j1, j2));
+        System.out.printf(":  -------------             %s -> X\n", j1.getNome());
+        System.out.printf(":1 | %c | %c | %c |             %s -> O\n", cIc(t[1][0], j1, j2), cIc(t[1][1], j1, j2), cIc(t[1][2], j1, j2), j2.getNome());
         System.out.println(":  -------------");
         System.out.printf(":2 | %c | %c | %c |\n", cIc(t[2][0], j1, j2), cIc(t[2][1], j1, j2), cIc(t[2][2], j1, j2));
         System.out.println(":---------------");
