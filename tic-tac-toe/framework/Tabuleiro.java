@@ -1,3 +1,16 @@
+/**
+       Aqui colocaremos a matriz, que ainda precisa ser ajustada para ser de objetos
+    e não de estruturas primitivas. Como optamos por usar GUI, acho que seria legal
+    criar uma classe "peça", por exemplo, e lá colocarmos seu rótulo ('X', 'O' ou ' '),
+    cor e outras informações legais.
+
+    Inicialmente, só por questão de testes, farei uma matriz 3x3 de inteiros
+    em que cada numero (o ID do jogador) representará um jogador e o valor 0
+    será para uma posição livre. A idéia de fazer isso é coseguir já desenvolver
+    a IA e construir a GUI.
+
+**/
+
 class Tabuleiro {
     private int[][] t;
     private int rodada;
@@ -26,20 +39,15 @@ class Tabuleiro {
         return t[x][y];
     }
 
+    // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
+    // Dessa forma, fica trivial ver de quem é a jogada ganhadora.
     public void setJogada(Jogador j, int x, int y) {
         this.t[x][y] = j.getID();
         this.espaco_livre--;
     }
 
+    // Verifica se algum jogador ganhou completando pelas colunas da matriz
     public int verificaColunas(Jogador j) {
-        // for(int i=0; i<3; ++i) {
-        //     for(int k=0; k<3; ++k)
-        //         System.out.printf("%d ",t[i][k]);
-        //
-        //     System.out.printf("\n\n");
-        //
-        // }
-
         if( t[0][0] == t[1][0] && t[1][0] == t[2][0] && t[0][0] == j.getID())
             return t[0][0];
         else if ( t[0][1] == t[1][1] && t[1][1] == t[2][1] && t[0][1] == j.getID())
@@ -50,6 +58,8 @@ class Tabuleiro {
         return -1;
     }
 
+
+    // Verifica se algum jogador ganhou completando pelas linhas da matriz
     public int verificaLinhas(Jogador j) {
         if( t[0][0] == t[0][1] && t[0][1] == t[0][2] && t[0][0] == j.getID() )
             return t[0][0];
@@ -61,6 +71,8 @@ class Tabuleiro {
         return -1;
     }
 
+
+    // Verifica se algum jogador ganhou completando pelas diagonais da matriz
     public int verificaDiagonais(Jogador j) {
         if( t[0][0] == t[1][1] && t[1][1] == t[2][2] && t[0][0] == j.getID() )
             return t[0][0];
@@ -71,9 +83,12 @@ class Tabuleiro {
     }
 
 
+
     public void imprimeJogo(Jogador j1, Jogador j2) {
 
         // System.out.printf("Rodada %d\n", rodada);
+
+        // Apaga as linhas já escritas no console
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
@@ -95,6 +110,8 @@ class Tabuleiro {
         System.out.println(":---------------");
     }
 
+    // Converte os numeros da matriz para um 'X', 'O' ou um ' ' dependendo do
+    // identificador do usuário
     private char cIc(int x, Jogador j1, Jogador j2) {
         if( x == j1.getID() )
             return 'X';

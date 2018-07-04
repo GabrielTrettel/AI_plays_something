@@ -1,17 +1,7 @@
 class Rules {
-    /**
-        Aqui colocaremos a matriz e as regras que definem se o jogador ganhou ou
-        não.
-
-        Inicialmente, só por questão de testes, farei uma matriz 3x3 de inteiros
-        em que cada numero representará um jogador e o valor 0 será para uma po-
-        sição livre. A idéia de fazer isso é coseguir já desenvolver a IA e cons-
-        truir a GUI.
-    **/
-
     private boolean game_status;
     private Tabuleiro t;
-    Jogador j1, j2;
+    private Jogador j1, j2;
 
     public Rules(Jogador j1, Jogador j2) {
         t = new Tabuleiro();
@@ -26,8 +16,9 @@ class Rules {
 
     // Efetua a jogada que o usuário está tentando fazer
     public boolean fazJogada(Jogador j, int cordX, int cordY) {
-        if(!validaJogada(t, cordX, cordY)) {
 
+        // Verifica se podemos realizar a jogada desejada
+        if(!validaJogada(t, cordX, cordY)) {
             return false;
         }
 

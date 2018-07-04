@@ -2,11 +2,38 @@ import java.util.Scanner;
 
 class Jogador {
     private String nome;
-    private int vitorias;
-    private int derrotas;
+    private int vitorias;     //TODO
+    private int derrotas;     //TODO
     private int id_jogador;
+    private static int id_global = 1;
 
-    static int id_global = 1;
+    /*
+
+           Variáveis (e métodos) marcadas como "private" só podem ser acessadas
+        por métodos de dentro da própria classe. Chamamos essa prática de encapsulamento
+        e fazemos isso para que uma outra classe não consiga alterar dados sensíveis,
+        causando algum tipo de transtorno na aplicação. Comumente, só não colocamos
+        o private quando o método for necessariamente publico.
+
+           Variáveis(e métodos) marcadas com o quantificador "static" possuem escopo de classe
+        e não de objeto, como o usual. Com isso fazemos com que todos os objetos da
+        classe jogador possuam o mesmo valor dessa variável independente do instante
+        que os objetos são instanciados.
+           Fazemos isso para definir de forma automatica um ID único para cada objeto
+        (jogador) conforme eles vão sendo instanciados. O método "retornaID" pega
+        o valor de id_global no instante que ele foi executado (lembrando que todos
+        as instancias tem essa variável com o mesmo valor) e guarda numa variavel
+        'aux'iliar. Então incrementamos o valor do id_global (que é atualizado para
+        todos os objetos) e depois retornamos o valor de aux para ser
+        armazenado no id_jogador, este sendo único e de escopo de objeto.
+
+           A idéia do "vitorias" e "derrotas" é montar algum tipo de ranking entre
+        todos os jogadores distintos que já foram instanciados. Para isso o jogo
+        escreveria algumas informações num arquivo de log(??) e conforme os players
+        forem ganhando e perdendo esses dados seríam atualizados. Também podemos
+        oferecer alguma sessão de "estatísticas" do desempenho de cada um.
+
+    */
 
 
     public Jogador() {
@@ -15,6 +42,7 @@ class Jogador {
         this.derrotas = 0;
         this.id_jogador = retornaID();
     }
+
 
     private static int retornaID() {
         int aux = id_global;
