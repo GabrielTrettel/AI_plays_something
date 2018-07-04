@@ -4,6 +4,8 @@ JFLAG = -cp .
 
 BUILD := build
 GUI := GUI
+FRAMEWORK := framework
+AI := IA
 
 
 .SUFFIXES: .java .class
@@ -15,6 +17,8 @@ all:
 	@mkdir $(BUILD)
 	@printf "\e[32mBuilding...\e[0m\n"
 	@$(MAKE) --no-print-directory -C $(GUI)
+	@$(MAKE) --no-print-directory -C $(FRAMEWORK)
+	@$(MAKE) --no-print-directory -C $(AI)
 #	$(JC) $(JFLAG) *.java -d $(BUILD)
 	@printf "\e[92mBuilt $@\e[0m\n"
 
