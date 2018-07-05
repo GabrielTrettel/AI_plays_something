@@ -31,32 +31,32 @@ class GameLoop {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
 
-        jogo.imprimeTabuleiro();
+        jogo.printBoard();
 
         while(jogo.getGameStatus()) {
             // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-            while(!jogo.fazJogada(j1, j1.getMoveX(), j1.getMoveY()) );
+            while(!jogo.makeMove(j1, j1.getMoveX(), j1.getMoveY()) );
 
-            if(!jogo.validade(j1)) {
-                jogo.imprimeTabuleiro();
+            if(!jogo.validate(j1)) {
+                jogo.printBoard();
                 break;
             }
 
-            jogo.imprimeTabuleiro();
+            jogo.printBoard();
 
 
             // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-            while(!jogo.fazJogada(j2, j2.getMoveX(), j2.getMoveY()) );
+            while(!jogo.makeMove(j2, j2.getMoveX(), j2.getMoveY()) );
 
-            if(!jogo.validade(j2)) {
-                jogo.imprimeTabuleiro();
+            if(!jogo.validate(j2)) {
+                jogo.printBoard();
                 break;
             }
 
-            jogo.imprimeTabuleiro();
+            jogo.printBoard();
 
         }
-        // jogo.imprimeTabuleiro();
+        // jogo.printBoard();
 
 
 

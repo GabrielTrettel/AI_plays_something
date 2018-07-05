@@ -1,9 +1,9 @@
 class Rules {
     private boolean game_status;
     private Tabuleiro t;
-    private Jogador j1, j2;
+    private Player j1, j2;
 
-    public Rules(Jogador j1, Jogador j2) {
+    public Rules(Player j1, Player j2) {
         t = new Tabuleiro();
         this.j1 = j1;
         this.j2 = j2;
@@ -15,10 +15,10 @@ class Rules {
     }
 
     // Efetua a jogada que o usuário está tentando fazer
-    public boolean fazJogada(Jogador j, int cordX, int cordY) {
+    public boolean makeMove(Player j, int cordX, int cordY) {
 
         // Verifica se podemos realizar a jogada desejada
-        if(!validaJogada(t, cordX, cordY)) {
+        if(!checkMove(t, cordX, cordY)) {
             return false;
         }
 
@@ -28,7 +28,7 @@ class Rules {
     }
 
     // Verifica se a jogada que o usuário pretende fazer é válida
-    private boolean validaJogada(Tabuleiro t, int cordX, int cordY) {
+    private boolean checkMove(Tabuleiro t, int cordX, int cordY) {
         if( t.getCelula(cordX, cordY) != 0 )
             return false;
         else
@@ -37,7 +37,7 @@ class Rules {
 
 
     // Valida se algém ganhou ou se deu velha
-    public boolean validade(Jogador j1) {
+    public boolean validate(Player j1) {
         int col = t.verificaColunas(j1);
         int diag = t.verificaDiagonais(j1);
         int lin = t.verificaLinhas(j1);
@@ -48,13 +48,13 @@ class Rules {
         }
 
         if( col != -1 ) {
-            parabenizaJogador(col, j1);
+            congratPlayer(col, j1);
             return false;
         } else if( lin != -1 ) {
-            parabenizaJogador(lin, j1);
+            congratPlayer(lin, j1);
             return false;
         }else if( diag != -1 ) {
-            parabenizaJogador(diag, j1);
+            congratPlayer(diag, j1);
             return false;
         }
 
@@ -63,7 +63,7 @@ class Rules {
 
 
 
-    private void parabenizaJogador(int x, Jogador j1) {
+    private void congratPlayer(int x, Player j1) {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
@@ -72,11 +72,11 @@ class Rules {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
-        System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", j1.getNome());
+        System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", j1.getName());
     }
 
 
-    public void imprimeTabuleiro() {
+    public void printBoard() {
         t.imprimeJogo(this.j1, this.j2);
     }
 
