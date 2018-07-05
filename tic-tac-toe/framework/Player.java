@@ -38,8 +38,8 @@ class Player {
 
     public Player() {
         this.name = name;
-        this.vitorias = 0;
-        this.derrotas = 0;
+        this.wins = 0;
+        this.losses = 0;
         this.player_id = returnID();
     }
 
@@ -92,7 +92,7 @@ class Player {
 
 
         while(a>2 || a<0) {
-            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getname());
+            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
         }

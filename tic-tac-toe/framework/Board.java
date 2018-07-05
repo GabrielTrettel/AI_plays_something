@@ -34,7 +34,7 @@ class Board {
     public int getRound(){
         return round;
     }
-    
+
     public int getFreeSpace() {
         return free_space;
     }
@@ -45,13 +45,13 @@ class Board {
 
     // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
     // Dessa forma, fica trivial ver de quem é a jogada ganhadora.
-    public void setMove(Jogador j, int x, int y) {
+    public void setMove(Player j, int x, int y) {
         this.t[x][y] = j.getID();
         this.free_space--;
     }
 
     // Verifica se algum jogador ganhou completando pelas colunas da matriz
-    public int checkColumns(Jogador j) {
+    public int checkColumns(Player j) {
         if( t[0][0] == t[1][0] && t[1][0] == t[2][0] && t[0][0] == j.getID())
             return t[0][0];
         else if ( t[0][1] == t[1][1] && t[1][1] == t[2][1] && t[0][1] == j.getID())
@@ -64,7 +64,7 @@ class Board {
 
 
     // Verifica se algum jogador ganhou completando pelas linhas da matriz
-    public int checkLines(Jogador j) {
+    public int checkLines(Player j) {
         if( t[0][0] == t[0][1] && t[0][1] == t[0][2] && t[0][0] == j.getID() )
             return t[0][0];
         else if ( t[1][0] == t[1][1] && t[1][1] == t[1][2] && t[1][0] == j.getID() )
@@ -77,7 +77,7 @@ class Board {
 
 
     // Verifica se algum jogador ganhou completando pelas diagonais da matriz
-    public int checkDiagonals(Jogador j) {
+    public int checkDiagonals(Player j) {
         if( t[0][0] == t[1][1] && t[1][1] == t[2][2] && t[0][0] == j.getID() )
             return t[0][0];
         else if ( t[0][2] == t[1][1] && t[1][1] == t[2][0] && t[0][2] == j.getID() )
@@ -88,7 +88,7 @@ class Board {
 
 
 
-    public void printGame(Jogador j1, Jogador j2) {
+    public void printGame(Player j1, Player j2) {
 
         // System.out.printf("Round %d\n", round);
 
@@ -107,8 +107,8 @@ class Board {
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
         System.out.printf(":0 | %c | %c | %c |\n", cIc(t[0][0], j1, j2), cIc(t[0][1], j1, j2), cIc(t[0][2], j1, j2));
-        System.out.printf(":  -------------             %s -> X\n", j1.getNome());
-        System.out.printf(":1 | %c | %c | %c |             %s -> O\n", cIc(t[1][0], j1, j2), cIc(t[1][1], j1, j2), cIc(t[1][2], j1, j2), j2.getNome());
+        System.out.printf(":  -------------             %s -> X\n", j1.getName());
+        System.out.printf(":1 | %c | %c | %c |             %s -> O\n", cIc(t[1][0], j1, j2), cIc(t[1][1], j1, j2), cIc(t[1][2], j1, j2), j2.getName());
         System.out.println(":  -------------");
         System.out.printf(":2 | %c | %c | %c |\n", cIc(t[2][0], j1, j2), cIc(t[2][1], j1, j2), cIc(t[2][2], j1, j2));
         System.out.println(":---------------");
@@ -116,7 +116,7 @@ class Board {
 
     // Converte os numeros da matriz para um 'X', 'O' ou um ' ' dependendo do
     // identificador do usuário
-    private char cIc(int x, Jogador j1, Jogador j2) {
+    private char cIc(int x, Player j1, Player j2) {
         if( x == j1.getID() )
             return 'X';
         else if ( x == j2.getID() )

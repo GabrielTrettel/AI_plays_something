@@ -5,7 +5,7 @@ JFLAG = -cp .
 BUILD := build
 GUI := GUI
 FRAMEWORK := framework
-AI := IA
+AI := AI
 
 
 .SUFFIXES: .java .class
