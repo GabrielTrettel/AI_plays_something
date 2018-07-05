@@ -15,29 +15,24 @@ class GameLoop {
 
     public static void main(String[] args) {
 
-        Player j1 = new Player();
-        j1.setName();
-        Player j2 = new Player();
-        j2.setName();
+        Player p1 = new Player();
+        p1.setName();
+        Player p2 = new Player();
+        p2.setName();
 
-        Rules game = new Rules(j1, j2);
+        Ai ai = new Ai();
+        Player ai_player = ai;   // Exemplo de polimorfismo
 
-        System.out.printf("Nome : %s\nID: %d\n\nNome : %s\nID: %d\n\n", j1.getName(), j1.getID(), j2.getName(), j2.getID());
-
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
+        Rules game = new Rules(p1, p2);
 
         game.printBoard();
 
         while(game.getGameStatus()) {
-            // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-            while(!game.makeMove(j1, j1.getMoveX(), j1.getMoveY()) );
 
-            if(!game.validate(j1)) {
+            // Jogador 1 faz sua jogada e é verificado se ele ganhou.
+            while(!game.makeMove(p1));
+
+            if(!game.validate(p1)) {
                 game.printBoard();
                 break;
             }
@@ -46,9 +41,9 @@ class GameLoop {
 
 
             // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-            while(!game.makeMove(j2, j2.getMoveX(), j2.getMoveY()) );
+            while(!game.makeMove(p2));
 
-            if(!game.validate(j2)) {
+            if(!game.validate(p2)) {
                 game.printBoard();
                 break;
             }
@@ -56,9 +51,5 @@ class GameLoop {
             game.printBoard();
 
         }
-        // game.printBoard();
-
-
-
     }
 }

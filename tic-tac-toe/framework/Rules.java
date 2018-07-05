@@ -1,12 +1,12 @@
-class Rules {
+public class Rules {
     private boolean game_status;
-    private Board t;
-    private Player j1, j2;
+    private Board board;
+    private Player p1, p2;
 
-    public Rules(Player j1, Player j2) {
-        t = new Board();
-        this.j1 = j1;
-        this.j2 = j2;
+    public Rules(Player p1, Player p2) {
+        board = new Board();
+        this.p1 = p1;
+        this.p2 = p2;
         game_status = true;
     }
 
@@ -15,21 +15,21 @@ class Rules {
     }
 
     // Efetua a jogada que o usuário está tentando fazer
-    public boolean makeMove(Player j, int cordX, int cordY) {
+    public boolean makeMove(Player p) {
+        int[] cord = p.getMove(board);
 
         // Verifica se podemos realizar a jogada desejada
-        if(!checkMove(t, cordX, cordY)) {
+        if(!checkMove( board, cord[0], cord[1] )) {
             return false;
         }
 
-        t.setMove(j, cordX, cordY);
-
+        board.setMove(p, cord[0], cord[1]);
         return true;
     }
 
     // Verifica se a jogada que o usuário pretende fazer é válida
-    private boolean checkMove(Board t, int cordX, int cordY) {
-        if( t.getCell(cordX, cordY) != 0 )
+    private boolean checkMove(Board board, int cordX, int cordY) {
+        if( board.getCell(cordX, cordY) != 0 )
             return false;
         else
             return true;
@@ -37,24 +37,24 @@ class Rules {
 
 
     // Valida se algém ganhou ou se deu velha
-    public boolean validate(Player j1) {
-        int col = t.checkColumns(j1);
-        int diag = t.checkDiagonals(j1);
-        int lin = t.checkLines(j1);
+    public boolean validate(Player p) {
+        int col = board.checkColumns(p);
+        int diag = board.checkDiagonals(p);
+        int lin = board.checkLines(p);
 
-        if( t.getFreeSpace() == 0 ) {
+        if(board.getFreeSpace() == 0 ) {
             this.game_status = false;
             return false;
         }
 
         if( col != -1 ) {
-            congratPlayer(col, j1);
+            congratPlayer(col, p);
             return false;
         } else if( lin != -1 ) {
-            congratPlayer(lin, j1);
+            congratPlayer(lin, p);
             return false;
         }else if( diag != -1 ) {
-            congratPlayer(diag, j1);
+            congratPlayer(diag, p);
             return false;
         }
 
@@ -63,7 +63,7 @@ class Rules {
 
 
 
-    private void congratPlayer(int x, Player j1) {
+    private void congratPlayer(int x, Player p) {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
@@ -72,12 +72,12 @@ class Rules {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
-        System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", j1.getName());
+        System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", p.getName());
     }
 
 
     public void printBoard() {
-        t.printGame(this.j1, this.j2);
+        board.printGame(this.p1, this.p2);
     }
 
 

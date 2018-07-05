@@ -11,7 +11,7 @@
 
 **/
 
-class Board {
+public class Board {
     private int[][] t;
     private int round;
     private int free_space;
@@ -93,8 +93,6 @@ class Board {
         // System.out.printf("Round %d\n", round);
 
         // Apaga as linhas já escritas no console
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
