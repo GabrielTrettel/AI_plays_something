@@ -6,7 +6,7 @@
      de pontuar as partidas (mostrando no console mesmo) desses dois usuários até
      que um deles (ou os dois?) saiam do jogo.
         Também seria legal implementar aqui uma forma de salvar os resultados como
-     for dito no arquivo Jogador.java
+     for dito no arquivo Player.java
 
 
 
@@ -15,14 +15,14 @@ class GameLoop {
 
     public static void main(String[] args) {
 
-        Jogador j1 = new Jogador();
-        j1.setNome();
-        Jogador j2 = new Jogador();
-        j2.setNome();
+        Player j1 = new Player();
+        j1.setName();
+        Player j2 = new Player();
+        j2.setName();
 
         Rules jogo = new Rules(j1, j2);
 
-        System.out.printf("Nome : %s\nID: %d\n\nNome : %s\nID: %d\n\n", j1.getNome(), j1.getID(), j2.getNome(), j2.getID());
+        System.out.printf("Nome : %s\nID: %d\n\nNome : %s\nID: %d\n\n", j1.getName(), j1.getID(), j2.getName(), j2.getID());
 
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
@@ -35,7 +35,7 @@ class GameLoop {
 
         while(jogo.getGameStatus()) {
             // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-            while(!jogo.fazJogada(j1, j1.getJogadaX(), j1.getJogadaY()) );
+            while(!jogo.fazJogada(j1, j1.getMoveX(), j1.getMoveY()) );
 
             if(!jogo.validade(j1)) {
                 jogo.imprimeTabuleiro();
@@ -46,7 +46,7 @@ class GameLoop {
 
 
             // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-            while(!jogo.fazJogada(j2, j2.getJogadaX(), j2.getJogadaY()) );
+            while(!jogo.fazJogada(j2, j2.getMoveX(), j2.getMoveY()) );
 
             if(!jogo.validade(j2)) {
                 jogo.imprimeTabuleiro();

@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
-class Jogador {
-    private String nome;
-    private int vitorias;     //TODO
-    private int derrotas;     //TODO
-    private int id_jogador;
-    private static int id_global = 1;
+class Player {
+    private String name;
+    private int wins;     //TODO
+    private int losses;     //TODO
+    private int player_id;
+    private static int global_id = 1;
 
     /*
 
@@ -21,11 +21,11 @@ class Jogador {
         que os objetos são instanciados.
            Fazemos isso para definir de forma automatica um ID único para cada objeto
         (jogador) conforme eles vão sendo instanciados. O método "retornaID" pega
-        o valor de id_global no instante que ele foi executado (lembrando que todos
+        o valor de global_id no instante que ele foi executado (lembrando que todos
         as instancias tem essa variável com o mesmo valor) e guarda numa variavel
-        'aux'iliar. Então incrementamos o valor do id_global (que é atualizado para
+        'aux'iliar. Então incrementamos o valor do global_id (que é atualizado para
         todos os objetos) e depois retornamos o valor de aux para ser
-        armazenado no id_jogador, este sendo único e de escopo de objeto.
+        armazenado no player_id, este sendo único e de escopo de objeto.
 
            A idéia do "vitorias" e "derrotas" é montar algum tipo de ranking entre
         todos os jogadores distintos que já foram instanciados. Para isso o jogo
@@ -36,63 +36,63 @@ class Jogador {
     */
 
 
-    public Jogador() {
-        this.nome = nome;
+    public Player() {
+        this.name = name;
         this.vitorias = 0;
         this.derrotas = 0;
-        this.id_jogador = retornaID();
+        this.player_id = returnID();
     }
 
 
-    private static int retornaID() {
-        int aux = id_global;
-        id_global = id_global+1;
+    private static int returnID() {
+        int aux = global_id;
+        global_id = global_id+1;
         return aux;
     }
-    public void setNome() {
+    public void setName() {
         Scanner sc1 = new Scanner(System.in);
-        System.out.printf("Entre com o nome do jogador %d: ", this.id_jogador);
-        this.nome = sc1.nextLine();
+        System.out.printf("Entre com o nome do jogador %d: ", this.player_id);
+        this.name = sc1.nextLine();
     }
 
-    public int getVitorias() {
-        return this.vitorias;
+    public int getWins() {
+        return this.wins;
     }
-    public int getDerrotas() {
-        return this.derrotas;
+    public int getLosses() {
+        return this.losses;
     }
     public int getID() {
-        return this.id_jogador;
+        return this.player_id;
     }
-    public String getNome() {
-        return this.nome;
+    public String getName() {
+        return this.name;
     }
 
 
-    public int getJogadaY() {
+    public int getMoveY() {
         Scanner sc1 = new Scanner(System.in);
-        System.out.printf("%s escolha a coluna: ", this.nome);
+        System.out.printf("%s escolha a coluna: ", this.name);
         int a = sc1.nextInt();
         System.out.print("\33[1A\33[2K");
 
 
         while(a>2 || a<0) {
-            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getNome());
+            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
         }
         return a;
     }
 
-    public int getJogadaX() {
+    public int getMoveX() {
         Scanner sc1 = new Scanner(System.in);
-        System.out.printf("%s escolha a linha: ", this.nome);
+        System.out.printf("%s escolha a linha: ", this.name);
         int a = sc1.nextInt();
         System.out.print("\33[1A\33[2K");
 
 
         while(a>2 || a<0) {
-            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getNome());
+            System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getname());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
         }
