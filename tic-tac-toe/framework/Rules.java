@@ -1,10 +1,10 @@
 class Rules {
     private boolean game_status;
-    private Tabuleiro t;
+    private Board t;
     private Player j1, j2;
 
     public Rules(Player j1, Player j2) {
-        t = new Tabuleiro();
+        t = new Board();
         this.j1 = j1;
         this.j2 = j2;
         game_status = true;
@@ -22,14 +22,14 @@ class Rules {
             return false;
         }
 
-        t.setJogada(j, cordX, cordY);
+        t.setMove(j, cordX, cordY);
 
         return true;
     }
 
     // Verifica se a jogada que o usuário pretende fazer é válida
-    private boolean checkMove(Tabuleiro t, int cordX, int cordY) {
-        if( t.getCelula(cordX, cordY) != 0 )
+    private boolean checkMove(Board t, int cordX, int cordY) {
+        if( t.getCell(cordX, cordY) != 0 )
             return false;
         else
             return true;
@@ -38,11 +38,11 @@ class Rules {
 
     // Valida se algém ganhou ou se deu velha
     public boolean validate(Player j1) {
-        int col = t.verificaColunas(j1);
-        int diag = t.verificaDiagonais(j1);
-        int lin = t.verificaLinhas(j1);
+        int col = t.checkColumns(j1);
+        int diag = t.checkDiagonals(j1);
+        int lin = t.checkLines(j1);
 
-        if( t.getEspacoLivre() == 0 ) {
+        if( t.getFreeSpace() == 0 ) {
             this.game_status = false;
             return false;
         }
@@ -77,7 +77,7 @@ class Rules {
 
 
     public void printBoard() {
-        t.imprimeJogo(this.j1, this.j2);
+        t.printGame(this.j1, this.j2);
     }
 
 

@@ -20,7 +20,7 @@ class GameLoop {
         Player j2 = new Player();
         j2.setName();
 
-        Rules jogo = new Rules(j1, j2);
+        Rules game = new Rules(j1, j2);
 
         System.out.printf("Nome : %s\nID: %d\n\nNome : %s\nID: %d\n\n", j1.getName(), j1.getID(), j2.getName(), j2.getID());
 
@@ -31,32 +31,32 @@ class GameLoop {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
 
-        jogo.printBoard();
+        game.printBoard();
 
-        while(jogo.getGameStatus()) {
+        while(game.getGameStatus()) {
             // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-            while(!jogo.makeMove(j1, j1.getMoveX(), j1.getMoveY()) );
+            while(!game.makeMove(j1, j1.getMoveX(), j1.getMoveY()) );
 
-            if(!jogo.validate(j1)) {
-                jogo.printBoard();
+            if(!game.validate(j1)) {
+                game.printBoard();
                 break;
             }
 
-            jogo.printBoard();
+            game.printBoard();
 
 
             // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-            while(!jogo.makeMove(j2, j2.getMoveX(), j2.getMoveY()) );
+            while(!game.makeMove(j2, j2.getMoveX(), j2.getMoveY()) );
 
-            if(!jogo.validate(j2)) {
-                jogo.printBoard();
+            if(!game.validate(j2)) {
+                game.printBoard();
                 break;
             }
 
-            jogo.printBoard();
+            game.printBoard();
 
         }
-        // jogo.printBoard();
+        // game.printBoard();
 
 
 

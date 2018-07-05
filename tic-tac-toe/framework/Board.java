@@ -11,19 +11,19 @@
 
 **/
 
-class Tabuleiro {
+class Board {
     private int[][] t;
-    private int rodada;
-    private int espaco_livre;
+    private int round;
+    private int free_space;
 
-    public Tabuleiro() {
+    public Board() {
         t = new int[3][3];
-        rodada = 0;
-        espaco_livre = 9;
-        t = completaTabuleiro(t);
+        round = 0;
+        free_space = 9;
+        t = fillBoard(t);
     }
 
-    private int[][] completaTabuleiro(int[][] t) {
+    private int[][] fillBoard(int[][] t) {
         for(int i=0; i<3; ++i)
             for(int j=0; j<3; ++j)
                 t[i][j] = 0;
@@ -31,23 +31,27 @@ class Tabuleiro {
         return t;
     }
 
-    public int getEspacoLivre() {
-        return espaco_livre;
+    public int getRound(){
+        return round;
+    }
+    
+    public int getFreeSpace() {
+        return free_space;
     }
 
-    public int getCelula(int x, int y) {
+    public int getCell(int x, int y) {
         return t[x][y];
     }
 
     // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
     // Dessa forma, fica trivial ver de quem é a jogada ganhadora.
-    public void setJogada(Jogador j, int x, int y) {
+    public void setMove(Jogador j, int x, int y) {
         this.t[x][y] = j.getID();
-        this.espaco_livre--;
+        this.free_space--;
     }
 
     // Verifica se algum jogador ganhou completando pelas colunas da matriz
-    public int verificaColunas(Jogador j) {
+    public int checkColumns(Jogador j) {
         if( t[0][0] == t[1][0] && t[1][0] == t[2][0] && t[0][0] == j.getID())
             return t[0][0];
         else if ( t[0][1] == t[1][1] && t[1][1] == t[2][1] && t[0][1] == j.getID())
@@ -60,7 +64,7 @@ class Tabuleiro {
 
 
     // Verifica se algum jogador ganhou completando pelas linhas da matriz
-    public int verificaLinhas(Jogador j) {
+    public int checkLines(Jogador j) {
         if( t[0][0] == t[0][1] && t[0][1] == t[0][2] && t[0][0] == j.getID() )
             return t[0][0];
         else if ( t[1][0] == t[1][1] && t[1][1] == t[1][2] && t[1][0] == j.getID() )
@@ -73,7 +77,7 @@ class Tabuleiro {
 
 
     // Verifica se algum jogador ganhou completando pelas diagonais da matriz
-    public int verificaDiagonais(Jogador j) {
+    public int checkDiagonals(Jogador j) {
         if( t[0][0] == t[1][1] && t[1][1] == t[2][2] && t[0][0] == j.getID() )
             return t[0][0];
         else if ( t[0][2] == t[1][1] && t[1][1] == t[2][0] && t[0][2] == j.getID() )
@@ -84,9 +88,9 @@ class Tabuleiro {
 
 
 
-    public void imprimeJogo(Jogador j1, Jogador j2) {
+    public void printGame(Jogador j1, Jogador j2) {
 
-        // System.out.printf("Rodada %d\n", rodada);
+        // System.out.printf("Round %d\n", round);
 
         // Apaga as linhas já escritas no console
         System.out.print("\33[1A\33[2K");
@@ -119,10 +123,6 @@ class Tabuleiro {
             return 'O';
 
         return ' ';
-    }
-
-    public int getRodada(){
-        return rodada;
     }
 
 }
