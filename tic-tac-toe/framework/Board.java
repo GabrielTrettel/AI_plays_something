@@ -11,24 +11,22 @@
 
 **/
 
+import java.util.ArrayList;
+
 public class Board {
     private int[][] t;
     private int round;
     private int free_space;
+    private Player p1;
+    private Player p2;
 
-    public Board() {
+    public Board(Player p1, Player p2) {
         t = new int[3][3];
         round = 0;
         free_space = 9;
         t = fillBoard(t);
-    }
-
-    private int[][] fillBoard(int[][] t) {
-        for(int i=0; i<3; ++i)
-            for(int j=0; j<3; ++j)
-                t[i][j] = 0;
-
-        return t;
+        this.p1 = p1;
+        this.p2 = p2;
     }
 
     public int getRound(){
@@ -43,20 +41,53 @@ public class Board {
         return t[x][y];
     }
 
-    // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
-    // Dessa forma, fica trivial ver de quem é a jogada ganhadora.
-    public void setMove(Player j, int x, int y) {
-        this.t[x][y] = j.getID();
-        this.free_space--;
+    public Player getHumanObj() {
+        if(this.p1.getIsAi())
+            return p1;
+
+        return p2;
     }
 
+    // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
+    // Dessa forma, fica trivial ver de quem é a jogada ganhadora.
+    public void setMove(Player p, int x, int y) {
+        this.t[x][y] = p.getID();
+        this.free_space--;
+    }
+    public void resetMove(int x, int y) {
+        this.t[x][y] = 0;
+        this.free_space++;
+    }
+
+    private int[][] fillBoard(int[][] t) {
+        for(int i=0; i<3; ++i)
+            for(int j=0; j<3; ++j)
+                t[i][j] = 0;
+
+        return t;
+    }
+
+    public Player checkWinner() {
+        int col = checkColumns();
+        int lin = checkLines();
+        int dia = checkDiagonals();
+
+        if( col == p1.getID() || lin == p1.getID() || dia == p1.getID() )
+            return p1;
+        else if ( col == p2.getID() || lin == p2.getID() || dia == p2.getID() )
+            return p2;
+        else
+            return null;
+    }
+
+
     // Verifica se algum jogador ganhou completando pelas colunas da matriz
-    public int checkColumns(Player j) {
-        if( t[0][0] == t[1][0] && t[1][0] == t[2][0] && t[0][0] == j.getID())
+    private int checkColumns() {
+        if( t[0][0] == t[1][0] && t[1][0] == t[2][0])
             return t[0][0];
-        else if ( t[0][1] == t[1][1] && t[1][1] == t[2][1] && t[0][1] == j.getID())
+        else if ( t[0][1] == t[1][1] && t[1][1] == t[2][1])
             return t[0][1];
-        else if ( t[0][2] == t[1][2] && t[1][2] == t[2][2] && t[0][2] == j.getID() )
+        else if ( t[0][2] == t[1][2] && t[1][2] == t[2][2])
             return t[0][2];
 
         return -1;
@@ -64,12 +95,12 @@ public class Board {
 
 
     // Verifica se algum jogador ganhou completando pelas linhas da matriz
-    public int checkLines(Player j) {
-        if( t[0][0] == t[0][1] && t[0][1] == t[0][2] && t[0][0] == j.getID() )
+    private int checkLines() {
+        if( t[0][0] == t[0][1] && t[0][1] == t[0][2])
             return t[0][0];
-        else if ( t[1][0] == t[1][1] && t[1][1] == t[1][2] && t[1][0] == j.getID() )
+        else if ( t[1][0] == t[1][1] && t[1][1] == t[1][2])
             return t[1][0];
-        else if ( t[2][0] == t[2][1] && t[2][1] == t[2][2] && t[2][0] == j.getID() )
+        else if ( t[2][0] == t[2][1] && t[2][1] == t[2][2])
             return t[2][0];
 
         return -1;
@@ -77,10 +108,10 @@ public class Board {
 
 
     // Verifica se algum jogador ganhou completando pelas diagonais da matriz
-    public int checkDiagonals(Player j) {
-        if( t[0][0] == t[1][1] && t[1][1] == t[2][2] && t[0][0] == j.getID() )
+    private int checkDiagonals() {
+        if( t[0][0] == t[1][1] && t[1][1] == t[2][2] )
             return t[0][0];
-        else if ( t[0][2] == t[1][1] && t[1][1] == t[2][0] && t[0][2] == j.getID() )
+        else if ( t[0][2] == t[1][1] && t[1][1] == t[2][0] )
             return t[0][2];
 
         return -1;
@@ -88,39 +119,50 @@ public class Board {
 
 
 
-    public void printGame(Player j1, Player j2) {
+    public void printGame(Player p1, Player p2) {
 
         // System.out.printf("Round %d\n", round);
 
         // Apaga as linhas já escritas no console
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
+        for(int x=0; x<8; ++x)
+            System.out.print("\33[1A\33[2K");
 
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
-        System.out.printf(":0 | %c | %c | %c |\n", cIc(t[0][0], j1, j2), cIc(t[0][1], j1, j2), cIc(t[0][2], j1, j2));
-        System.out.printf(":  -------------             %s -> X\n", j1.getName());
-        System.out.printf(":1 | %c | %c | %c |             %s -> O\n", cIc(t[1][0], j1, j2), cIc(t[1][1], j1, j2), cIc(t[1][2], j1, j2), j2.getName());
+        System.out.printf(":0 | %c | %c | %c |\n", cIc(t[0][0], p1, p2), cIc(t[0][1], p1, p2), cIc(t[0][2], p1, p2));
+        System.out.printf(":  -------------             %s -> X\n", p1.getName());
+        System.out.printf(":1 | %c | %c | %c |             %s -> O\n", cIc(t[1][0], p1, p2), cIc(t[1][1], p1, p2), cIc(t[1][2], p1, p2), p2.getName());
         System.out.println(":  -------------");
-        System.out.printf(":2 | %c | %c | %c |\n", cIc(t[2][0], j1, j2), cIc(t[2][1], j1, j2), cIc(t[2][2], j1, j2));
+        System.out.printf(":2 | %c | %c | %c |\n", cIc(t[2][0], p1, p2), cIc(t[2][1], p1, p2), cIc(t[2][2], p1, p2));
         System.out.println(":---------------");
     }
 
     // Converte os numeros da matriz para um 'X', 'O' ou um ' ' dependendo do
     // identificador do usuário
-    private char cIc(int x, Player j1, Player j2) {
-        if( x == j1.getID() )
+    private char cIc(int x, Player p1, Player p2) {
+        if( x == p1.getID() )
             return 'X';
-        else if ( x == j2.getID() )
+        else if ( x == p2.getID() )
             return 'O';
 
         return ' ';
+    }
+
+    public ArrayList<int[]> getFreeCells() {
+        // int[][] free_cells = new int[][2]
+        ArrayList<int[]> free_cells = new ArrayList<int[]>();  // famoso exoterismo
+        int[] pair = new int[2];
+
+        for( int i=0; i<3; ++i )
+            for( int j=0; j<3; ++j ) {
+                if( t[i][j] == 0 ){
+                    pair[0] = i;
+                    pair[1] = j;
+                    free_cells.add(pair);
+                }
+            }
+
+        return free_cells;
     }
 
 }

@@ -26,12 +26,14 @@ public class Player {
     protected int wins;     //TODO
     protected int losses;     //TODO
     protected int player_id;
+    protected boolean is_ai;
     private static int global_id = 1;
 
 
     public Player() {
         this.wins = 0;
         this.losses = 0;
+        this.is_ai = false;
         this.player_id = returnID();
     }
 
@@ -47,6 +49,11 @@ public class Player {
         System.out.printf("Entre com o nome do jogador %d: ", this.player_id);
         this.name = sc1.nextLine();
     }
+
+    public boolean getIsAi() {
+        return is_ai;
+    }
+
 
     public int getWins() {
         return this.wins;

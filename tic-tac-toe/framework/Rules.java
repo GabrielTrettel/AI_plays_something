@@ -4,7 +4,7 @@ public class Rules {
     private Player p1, p2;
 
     public Rules(Player p1, Player p2) {
-        board = new Board();
+        board = new Board(p1, p2);
         this.p1 = p1;
         this.p2 = p2;
         game_status = true;
@@ -37,33 +37,24 @@ public class Rules {
 
 
     // Valida se algém ganhou ou se deu velha
-    public boolean validate(Player p) {
-        int col = board.checkColumns(p);
-        int diag = board.checkDiagonals(p);
-        int lin = board.checkLines(p);
+    public boolean validate(Player p1, Player p2) {
+        Player winner = board.checkWinner();
 
         if(board.getFreeSpace() == 0 ) {
             this.game_status = false;
             return false;
         }
 
-        if( col != -1 ) {
-            congratPlayer(col, p);
+        if( winner != null ) {
+            congratPlayer(winner);
             return false;
-        } else if( lin != -1 ) {
-            congratPlayer(lin, p);
-            return false;
-        }else if( diag != -1 ) {
-            congratPlayer(diag, p);
-            return false;
-        }
-
-        return true;
+        } else
+            return true;
     }
 
 
 
-    private void congratPlayer(int x, Player p) {
+    private void congratPlayer(Player p) {
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");
         System.out.print("\33[1A\33[2K");

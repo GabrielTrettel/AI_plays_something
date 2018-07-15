@@ -21,8 +21,10 @@ class GameLoop {
         p2.setName();
 
         Ai ai = new Ai();
-        Player ai_player = ai;   // Exemplo de polimorfismo
+        Player ai_player = ai;   // Exemplo de polimorfismo.
 
+        // ATENÇÃO O JOGADOR ARTIFICIAL PRECISARÁ SEMPRE SER O SEGUNDO ARGUMENTO DOS MÉTODOS
+        p2 = ai_player;
         Rules game = new Rules(p1, p2);
 
         game.printBoard();
@@ -32,7 +34,7 @@ class GameLoop {
             // Jogador 1 faz sua jogada e é verificado se ele ganhou.
             while(!game.makeMove(p1));
 
-            if(!game.validate(p1)) {
+            if(!game.validate(p1, p2)) {
                 game.printBoard();
                 break;
             }
@@ -43,7 +45,7 @@ class GameLoop {
             // Jogador 2 faz sua jogada e é verificado se ele ganhou.
             while(!game.makeMove(p2));
 
-            if(!game.validate(p2)) {
+            if(!game.validate(p1, p2)) {
                 game.printBoard();
                 break;
             }
