@@ -124,8 +124,8 @@ public class Board {
         // System.out.printf("Round %d\n", round);
 
         // Apaga as linhas já escritas no console
-        for(int x=0; x<8; ++x)
-            System.out.print("\33[1A\33[2K");
+        // for(int x=0; x<8; ++x)
+        //     System.out.print("\33[1A\33[2K");
 
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
@@ -151,16 +151,22 @@ public class Board {
     public ArrayList<int[]> getFreeCells() {
         // int[][] free_cells = new int[][2]
         ArrayList<int[]> free_cells = new ArrayList<int[]>();  // famoso exoterismo
-        int[] pair = new int[2];
 
-        for( int i=0; i<3; ++i )
+
+        for( int i=0; i<3; ++i ) {
             for( int j=0; j<3; ++j ) {
                 if( t[i][j] == 0 ){
+                    // System.out.printf("%d - %d\n", i, j);
+                    int[] pair = new int[2];
                     pair[0] = i;
                     pair[1] = j;
                     free_cells.add(pair);
                 }
             }
+        }
+
+            // for(int[] move : free_cells)
+    		// 	System.out.printf("%d %d\n", move[0], move[1]);
 
         return free_cells;
     }

@@ -36,20 +36,18 @@ import java.util.*;
 
 	*/
 
+
 public class Ai extends Player {
+	private int LOSS = -1000;
+	private int WIN = 1000;
+	private int TIE = 0;
 
 	public Ai() {
 		this.is_ai = true;
-		this.name = "Chuck Norris";
+		this.name = "Pai do Morty";
 	}
 
 	// Sobrescrita de método para se aproveitar do polimorfismo de player e Ai
-	//@Overide
-	public int[] getMove(Board board) {
-		int[] moves = thinkBestMove(board);
-		return moves;
-	}
-
 	//@Overide
 	public void setName() {
 		//TODO
@@ -58,25 +56,23 @@ public class Ai extends Player {
 		// name = sc1.nextLine();
 	}
 
-	private int[] thinkBestMove(Board board) {
-		ArrayList<int[]> avaliableCells = board.getFreeCells();
-		int[] best_move = {-1, -1};
+	//@Overide
+	public int[] getMove(Board board) {
+		int[] out = new int[3];
+		int[] best_move = new int[2];
 		Board new_board = board;
-		int best_score = -1000;
+		new_board.getFreeCells();
+		// ArrayList<int[]> avaliableCells = board.getFreeCells();
+		//
+		// for(int[] move : avaliableCells)
+		// 	System.out.printf("%d %d\n", move[0], move[1]);
 
-		for(int[] move : avaliableCells) {
-			new_board.setMove(this, move[0], move[1]);
-
-			int move_score = minmax(new_board, 0, false);
-
-			new_board.resetMove(move[0], move[1]);
-
-			if(move_score > best_score) {
-				best_move = move;
-				best_score = move_score;
-			}
-		}
-
+		out = minmax(new_board, 0, true, LOSS, WIN);
+		best_move[0] = out[0];
+		best_move[1] = out[1];
+		//
+		// best_move[0] = 2;
+		// best_move[1] = 2;
 		return best_move;
 	}
 
@@ -85,47 +81,62 @@ public class Ai extends Player {
 
 		if( winner != null )
 			if( winner.getIsAi() == true)
-				return 10;
+				return WIN;
 			else
-				return -10;
+				return LOSS;
 		else
-			return 0;
+			return TIE;
 	}
 
-	private int minmax(Board board, int depth, boolean is_max) {
-		int score = currScore(board);
+	private int[] minmax(Board board, int depth, boolean is_ai, int alpha, int beta) {
+		int best_score = (is_ai == true) ? LOSS : WIN;
+		int[] best_move = {-1, -1};
+		int[] output = new int[3];
 
-		if(score == 10 || score == -10)
-			return score - depth;
-		if(board.getFreeSpace() == 0)
-			return 0 - depth;
-
-		if(is_max) {
-			int best = -1000;
-
-			for(int x=0; x<3; ++x) {
-				for(int y=0; y<3; ++y) {
-					if(board.getCell(x, y) == 0) {
-						board.setMove(this, x, y);
-						best = Math.max(minmax(board, depth+1, !is_max), best);
-						board.resetMove(x, y);
-					}
-				}
-			}
-			return best;
-
-		} else {
-			int best = 1000;
-			for(int x=0; x<3; ++x) {
-				for(int y=0; y<3; ++y) {
-					if(board.getCell(x, y) == 0) {
-						board.setMove(board.getHumanObj(), x, y);       // Isso ta horrível, mds...
-						best = Math.min(minmax(board, depth+1, !is_max), best);
-						board.resetMove(x, y);
-					}
-				}
-			}
-			return best;
+		int score_base = currScore(board);
+		if(board.getFreeSpace() == 0 || score_base != 0) {
+			output[0] = best_move[0];
+			output[1] = best_move[1];
+			output[2] = score_base;
+			return output;
 		}
+
+		ArrayList<int[]> avaliableCells = board.getFreeCells();
+
+		for(int[] move : avaliableCells) {
+
+			int[] aux_move = move;
+			Player px = (is_ai) ? this : board.getHumanObj();
+			board.setMove(px, move[0], move[1]);
+
+			if(is_ai) {
+				int score = minmax(board, depth+1, !is_ai, alpha, beta)[2];
+
+				if(best_score < score) {
+					best_score = score - depth * 10;
+					best_move = move;
+				}
+				alpha = Math.max(alpha, best_score);
+				board.resetMove(move[0], move[1]);
+				if(beta <= alpha)
+					break;
+
+			} else {
+				int score = minmax(board, depth+1, !is_ai, alpha, beta)[2];
+
+				if(best_score > score) {
+					best_score = score + depth * 10;
+					best_move = move;
+				}
+				beta = Math.min(beta, best_score);
+				board.resetMove(move[0], move[1]);
+				if(beta <= alpha)
+					break;
+			}
+		}
+		output[0] = best_move[0];
+		output[1] = best_move[1];
+		output[2] = score_base;
+		return output;
 	}
 }

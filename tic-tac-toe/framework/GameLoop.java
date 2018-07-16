@@ -18,7 +18,7 @@ class GameLoop {
         Player p1 = new Player();
         p1.setName();
         Player p2 = new Player();
-        p2.setName();
+        // p2.setName();
 
         Ai ai = new Ai();
         Player ai_player = ai;   // Exemplo de polimorfismo.
