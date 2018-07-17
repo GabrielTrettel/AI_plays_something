@@ -17,7 +17,7 @@ class GameLoop {
 
         Player p1 = new Player();
         // p1.setName();
-        Player p2 = new Player();
+        Player p2;
         // p2.setName();
 
         Ai ai = new Ai();

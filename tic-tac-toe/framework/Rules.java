@@ -29,7 +29,7 @@ public class Rules {
 
     // Verifica se a jogada que o usuário pretende fazer é válida
     private boolean checkMove(Board board, int cordX, int cordY) {
-        if( board.getCell(cordX, cordY) != 0 )
+        if( board.getCell(cordX, cordY).getID() != 0 )
             return false;
         else
             return true;

@@ -84,8 +84,8 @@ public class Ai extends Player {
 		if( board.checkWinnerPlayer(p) == true )
 			return WIN;
 
-
 		Player opponent = board.getOpponent(p);
+        System.out.println(opponent.getID());
 		if( board.checkWinnerPlayer(opponent) == true )
 			return LOSS;
 

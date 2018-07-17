@@ -27,6 +27,7 @@ public class Player {
     protected int losses;     //TODO
     protected int player_id;
     protected boolean is_ai;
+    protected char label;
     private static int global_id = 1;
 
 
