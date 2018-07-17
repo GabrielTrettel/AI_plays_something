@@ -16,7 +16,7 @@ class GameLoop {
     public static void main(String[] args) {
 
         Player p1 = new Player();
-        p1.setName();
+        // p1.setName();
         Player p2 = new Player();
         // p2.setName();
 
@@ -25,6 +25,8 @@ class GameLoop {
 
         // ATENÇÃO O JOGADOR ARTIFICIAL PRECISARÁ SEMPRE SER O SEGUNDO ARGUMENTO DOS MÉTODOS
         p2 = ai_player;
+        // System.out.println(p1.getIsAi());
+
         Rules game = new Rules(p1, p2);
 
         game.printBoard();

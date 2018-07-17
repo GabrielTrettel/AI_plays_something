@@ -34,7 +34,9 @@ public class Player {
         this.wins = 0;
         this.losses = 0;
         this.is_ai = false;
+        this.name = "Random";
         this.player_id = returnID();
+
     }
 
 
@@ -51,7 +53,7 @@ public class Player {
     }
 
     public boolean getIsAi() {
-        return is_ai;
+        return this.is_ai;
     }
 
 

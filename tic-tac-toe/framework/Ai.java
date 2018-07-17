@@ -1,6 +1,10 @@
 import java.util.*;
 // import java.lang.Math;
 	/*
+
+		OBS: Algoritmo fortemente inspirado no escrito por GeorgeSeif
+		https://github.com/GeorgeSeif/Tic-Tac-Toe-AI/blob/master/Source.cpp
+
 		Aqui queremos que a IA herde todos os atributos e comportamentos
 	de Player, já que a IA é um player. Para isso usamos o extends
 	que faz justamente essa extensão. A classe Player possui métodos
@@ -61,82 +65,97 @@ public class Ai extends Player {
 		int[] out = new int[3];
 		int[] best_move = new int[2];
 		Board new_board = board;
+
 		new_board.getFreeCells();
-		// ArrayList<int[]> avaliableCells = board.getFreeCells();
-		//
+		ArrayList<int[]> avaliableCells = board.getFreeCells();
+
 		// for(int[] move : avaliableCells)
 		// 	System.out.printf("%d %d\n", move[0], move[1]);
 
-		out = minmax(new_board, 0, true, LOSS, WIN);
+		out = minmax(new_board, 0, this, LOSS, WIN);
+
 		best_move[0] = out[0];
 		best_move[1] = out[1];
-		//
-		// best_move[0] = 2;
-		// best_move[1] = 2;
+
 		return best_move;
 	}
 
-	private int currScore(Board board) {
-		Player winner = board.checkWinner();
+	private int currScore(Board board, Player p) {
+		if( board.checkWinnerPlayer(p) == true )
+			return WIN;
 
-		if( winner != null )
-			if( winner.getIsAi() == true)
-				return WIN;
-			else
-				return LOSS;
-		else
+
+		Player opponent = board.getOpponent(p);
+		if( board.checkWinnerPlayer(opponent) == true )
+			return LOSS;
+
+
+		if( board.getFreeSpace() == 0 )
 			return TIE;
+
+		return TIE;
+
 	}
 
-	private int[] minmax(Board board, int depth, boolean is_ai, int alpha, int beta) {
-		int best_score = (is_ai == true) ? LOSS : WIN;
+	private int[] minmax(Board board, int depth, Player x, int alpha, int beta) {
+		int best_score = ( x.getIsAi()==true ) ? LOSS : WIN;
+
 		int[] best_move = {-1, -1};
 		int[] output = new int[3];
 
-		int score_base = currScore(board);
-		if(board.getFreeSpace() == 0 || score_base != 0) {
+		// System.out.println(best_score);
+
+		if(board.getFreeSpace() == 0 || currScore(board, this) != TIE) {
+			best_score = currScore(board, this);
 			output[0] = best_move[0];
 			output[1] = best_move[1];
-			output[2] = score_base;
+			output[2] = best_score;
 			return output;
 		}
 
 		ArrayList<int[]> avaliableCells = board.getFreeCells();
 
 		for(int[] move : avaliableCells) {
-
 			int[] aux_move = move;
-			Player px = (is_ai) ? this : board.getHumanObj();
-			board.setMove(px, move[0], move[1]);
 
-			if(is_ai) {
-				int score = minmax(board, depth+1, !is_ai, alpha, beta)[2];
+			board.setMove(x, move[0], move[1]);
+
+			if( x == board.getAiObj() ) {
+				int score = minmax(board, depth+1, board.getHumanObj(), alpha, beta)[2];
 
 				if(best_score < score) {
 					best_score = score - depth * 10;
 					best_move = move;
+
+					alpha = Math.max(alpha, best_score);
+
+					board.resetMove(move[0], move[1]);
+
+					if(beta <= alpha)
+						break;
 				}
-				alpha = Math.max(alpha, best_score);
-				board.resetMove(move[0], move[1]);
-				if(beta <= alpha)
-					break;
 
 			} else {
-				int score = minmax(board, depth+1, !is_ai, alpha, beta)[2];
+				int score = minmax(board, depth+1, board.getAiObj(), alpha, beta)[2];
 
 				if(best_score > score) {
 					best_score = score + depth * 10;
 					best_move = move;
+
+					beta = Math.min(beta, best_score);
+
+					board.resetMove(move[0], move[1]);
+
+					if(beta <= alpha)
+						break;
 				}
-				beta = Math.min(beta, best_score);
-				board.resetMove(move[0], move[1]);
-				if(beta <= alpha)
-					break;
 			}
+			board.resetMove(move[0], move[1]);
 		}
+
 		output[0] = best_move[0];
 		output[1] = best_move[1];
-		output[2] = score_base;
+		output[2] = best_score;
 		return output;
 	}
 }

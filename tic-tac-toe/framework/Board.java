@@ -42,10 +42,19 @@ public class Board {
     }
 
     public Player getHumanObj() {
-        if(this.p1.getIsAi())
-            return p1;
-
+        return p1;
+    }
+    public Player getAiObj() {
         return p2;
+    }
+
+    public Player getOpponent(Player p) {
+        if( p.getID() == this.p1.getID() )
+            return this.p2;
+        else if( p.getID() == this.p2.getID() )
+            return this.p1;
+
+        return null;
     }
 
     // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
@@ -78,6 +87,18 @@ public class Board {
             return p2;
         else
             return null;
+    }
+
+    public boolean checkWinnerPlayer(Player p) {
+        int col = checkColumns();
+        int lin = checkLines();
+        int dia = checkDiagonals();
+
+        if( col == p.getID() || lin == p.getID() || dia == p.getID() )
+            return true;
+
+        return false;
+
     }
 
 
