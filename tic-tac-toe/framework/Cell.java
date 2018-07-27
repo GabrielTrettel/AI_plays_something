@@ -18,10 +18,8 @@ public class Cell {
         this.label = (this.id % 2 != 0) ? 'X' : 'O';
 
     }
-    public void resetID() {
+    public void resetOwnership() {
         this.id = 0;
-    }
-    public void resetLabel() {
         this.label = ' ';
     }
 }

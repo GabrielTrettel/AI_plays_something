@@ -13,6 +13,9 @@ public class Rules {
     public boolean getGameStatus() {
         return this.game_status;
     }
+    public void setGameStatus(boolean game_status) {
+        this.game_status = game_status;
+    }
 
     // Efetua a jogada que o usuário está tentando fazer
     public boolean makeMove(Player p) {
@@ -55,15 +58,17 @@ public class Rules {
 
 
     private void congratPlayer(Player p) {
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
-        System.out.print("\33[1A\33[2K");
+        for(int x=0; x<8; ++x)
+            System.out.print("\33[1A\33[2K");
+
         System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", p.getName());
+    }
+
+    public void resetBoard() {
+        for(int x=0; x<4; ++x)
+            System.out.print("\33[1A\33[2K");
+
+        board.resetCells();
     }
 
 

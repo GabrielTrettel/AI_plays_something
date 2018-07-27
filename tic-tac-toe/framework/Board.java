@@ -65,9 +65,15 @@ public class Board {
         this.free_space--;
     }
     public void resetMove(int x, int y) {
-        this.c[x][y].resetID();
-        this.c[x][y].resetLabel();
+        this.c[x][y].resetOwnership();
         this.free_space++;
+    }
+    public void resetCells() {
+        for(int i=0; i<3; ++i)
+            for(int j=0; j<3; ++j)
+                c[i][j].resetOwnership();
+
+        this.free_space = 9;
     }
 
     private Cell[][] fillBoard(Cell[][] t) {
@@ -147,8 +153,8 @@ public class Board {
         // System.out.printf("Round %d\n", round);
 
         // Apaga as linhas já escritas no console
-        // for(int x=0; x<8; ++x)
-        //     System.out.print("\33[1A\33[2K");
+        for(int x=0; x<8; ++x)
+            System.out.print("\33[1A\33[2K");
 
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
