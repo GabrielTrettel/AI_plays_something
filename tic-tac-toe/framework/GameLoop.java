@@ -32,6 +32,7 @@ class GameLoop {
 
             // ATENÇÃO O JOGADOR ARTIFICIAL PRECISARÁ SEMPRE SER O SEGUNDO ARGUMENTO DOS MÉTODOS
             py = ai_player;
+            py.setLabel(px);
             // System.out.println(px.getIsAi());
         }
         else {
@@ -44,6 +45,7 @@ class GameLoop {
         boolean continue_game =  true;
 
         do {
+
             game.printBoard();
             while(game.getGameStatus()) {
 
