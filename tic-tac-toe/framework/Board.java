@@ -148,17 +148,8 @@ public class Board {
 
         return -1;
     }
-
-
-
+    
     public void printGame(Player px, Player py) {
-
-        // System.out.printf("Round %d\n", round);
-
-        // Apaga as linhas já escritas no console
-        for(int x=0; x<8; ++x)
-            System.out.print("\33[1A\33[2K");
-
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
         System.out.printf(":0 | %c | %c | %c |\n", c[0][0].getLabel(), c[0][1].getLabel(), c[0][2].getLabel());
@@ -170,8 +161,7 @@ public class Board {
     }
 
     public int[][] getFreeCells() {
-        // int[][] free_cells = new int[][2]
-        int[][] free_cells = new int[this.free_space][2];  // famoso exoterismo
+        int[][] free_cells = new int[this.free_space][2];
 
         int ctd = 0;
         for( int i=0; i<3; ++i ) {
@@ -183,9 +173,6 @@ public class Board {
                 }
             }
         }
-
-            // for(int[] move : free_cells)
-            //  System.out.printf("%d %d\n", move[0], move[1]);
 
         return free_cells;
     }

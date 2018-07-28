@@ -1,30 +1,44 @@
-import java.util.Random;
+import java.util.*;
 
 public class Ai extends Player {
     // this.level pertence ao intervalo [0, 3]
     private int level;
     private Random generator;
+    private String name;
 
-    public Ai() {
+    public Ai(Player p) {
         this.is_ai = true;
-        this.name = "Chuck Norris";
         this.level = 0;
         this.generator = new Random();
+        this.setLabel(p);
+        this.setName();
     }
     // Sobrescrita de método para se aproveitar do polimorfismo de player e Ai
     @Override
     public void setName() {
-        //TODO
-        // Scanner sc1 = new Scanner(System.in);
-        // System.out.printf("Escolha com quem você quer jogar %d: ", player_id);
-        // name = sc1.nextLine();
+        if(this.level == 0)
+            this.name = "Chuck Norris";
+        else if( this.level == 1)
+            this.name = "Rick Sanches";
+        else if( this.level == 2)
+            this.name = "Morty Smith";
+        else if( this.level == 3)
+            this.name = "Mr. Poopybutt";
+        else if( this.level == 4)
+            this.name = "Jerry Smith";
+
+    }
+    @Override
+    public String getName() {
+        return this.name;
+    }
 
     @Override
     public int[] getMove(Board board) {
         float probability = this.generator.nextFloat();
         int[] moves;
 
-        if(this.level > probability || this.level == 20)
+        if((this.level*5) > probability*15 || (this.level*5) == 20)
             moves = board.getFreeCells()[ this.generator.nextInt( board.getFreeSpace()-1 ) ];
         else
             moves = thinkBestMove(board);
@@ -34,19 +48,29 @@ public class Ai extends Player {
 
     }
 
-}
+    @Override
+    public void setLabel(Player p) {
+        if (p.getLabel() == 'X')
+            this.label = 'O';
+        else
+            this.label = 'X';
 
-    public void setLevel(int x) {
+        setLevel();   // POG : Programação Orientada a Gambiarra
+    }
+
+    private void setLevel() {
         int lvl;
         Scanner sc1 = new Scanner(System.in);
 
         do {
-            System.out.printf("Escolha o nível que voce quer jogar \n 0 -  Impossível  |  1 - Dificil  |  2 - Médio  |  3 - Fácil  |  4 - Modo hu3");
+            System.out.printf("Escolha o nível que voce quer jogar \n 0 -  Impossível  |  1 - Dificil  |  2 - Médio  |  3 - Fácil  |  4 - Modo hu3\n");
             lvl = sc1.nextInt();
+            System.out.print("\33[1A\33[2K");
+            System.out.print("\33[1A\33[2K");
             System.out.print("\33[1A\33[2K");
         } while(lvl < 0 || lvl > 4);
 
-        this.level = lvl*5;
+        this.level = lvl;
     }
 
     private int[] thinkBestMove(Board board) {
@@ -74,7 +98,6 @@ public class Ai extends Player {
         return best_move;
     }
     private int currScore(Board board) {
-
         if(board.checkWinner() == null || board.getFreeSpace() == 0)
             return 0;
 

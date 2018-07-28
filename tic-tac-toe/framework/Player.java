@@ -1,25 +1,4 @@
 import java.util.Scanner;
-/*
-
-Variáveis(e métodos) marcadas com o quantificador "static" possuem escopo de classe
-e não de objeto, como o usual. Com isso fazemos com que todos os objetos da
-classe jogador possuam o mesmo valor dessa variável independente do instante
-que os objetos são instanciados.
-Fazemos isso para definir de forma automatica um ID único para cada objeto
-(jogador) conforme eles vão sendo instanciados. O método "retornaID" pega
-o valor de global_id no instante que ele foi executado (lembrando que todos
-as instancias tem essa variável com o mesmo valor) e guarda numa variavel
-'aux'iliar. Então incrementamos o valor do global_id (que é atualizado para
-todos os objetos) e depois retornamos o valor de aux para ser
-armazenado no player_id, este sendo único e de escopo de objeto.
-
-A idéia do "vitorias" e "derrotas" é montar algum tipo de ranking entre
-todos os jogadores distintos que já foram instanciados. Para isso o jogo
-escreveria algumas informações num arquivo de log(??) e conforme os players
-forem ganhando e perdendo esses dados seríam atualizados. Também podemos
-oferecer alguma sessão de "estatísticas" do desempenho de cada um.
-
-*/
 
 public class Player {
     protected String name;
@@ -51,18 +30,22 @@ public class Player {
         Scanner sc1 = new Scanner(System.in);
         System.out.printf("Entre com o nome do jogador %d: ", this.player_id);
         this.name = sc1.nextLine();
+        System.out.print("\33[1A\33[2K");
     }
 
-    public void askLabel() {
+    public void setLabel() {
         Scanner sc1 = new Scanner(System.in);
         System.out.printf("Jogador %d: X ou O? ", this.player_id);
         this.label = sc1.next().toUpperCase().charAt(0);
         System.out.print("\33[1A\33[2K");
 
+
         while (this.label != 'X' && this.label != 'O') {
             System.out.printf("Peça inválida. %s, por favor, escolha novamente\n", this.getName());
             this.label = sc1.next().toUpperCase().charAt(0);
             System.out.print("\33[1A\33[2K");
+            System.out.print("\33[1A\33[2K");
+
         }
     }
     public void setLabel(Player p) {
@@ -75,8 +58,6 @@ public class Player {
     public boolean IsAi() {
         return this.is_ai;
     }
-
-
     public int getWins() {
         return this.wins;
     }
@@ -107,10 +88,13 @@ public class Player {
         System.out.print("\33[1A\33[2K");
 
 
+
         while(a>2 || a<0) {
             System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
+            System.out.print("\33[1A\33[2K");
+
         }
         return a;
     }
@@ -122,10 +106,13 @@ public class Player {
         System.out.print("\33[1A\33[2K");
 
 
+
         while(a>2 || a<0) {
             System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
+            System.out.print("\33[1A\33[2K");
+
         }
         return a;
     }

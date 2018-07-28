@@ -52,6 +52,18 @@ public class Rules {
         else
             return true;
     }
+    public void cleanBoard() {
+        // Apaga as linhas já escritas no console
+        for(int x=0; x<8; ++x)
+            System.out.print("\33[1A\33[2K");
+
+    }
+    public void cleanBoard(int i) {
+        // Apaga as linhas já escritas no console
+        for(int x=0; x<i; ++x)
+            System.out.print("\33[1A\33[2K");
+
+    }
 
 
     // Valida se algém ganhou ou se deu velha
@@ -73,19 +85,11 @@ public class Rules {
 
 
     private void congratPlayer(Player p) {
-        for(int x=0; x<8; ++x)
-            System.out.print("\33[1A\33[2K");
+        // for(int x=0; x<8; ++x)
+        //     System.out.print("\33[1A\33[2K");
 
-        System.out.printf("O jogador %s ganhou o jogo!\n\n\n\n\n\n\n\n\n\n\n", p.getName());
+        System.out.printf("O jogador %s ganhou o jogo!\n", p.getName());
     }
-
-    public void resetBoard() {
-        for(int x=0; x<4; ++x)
-            System.out.print("\33[1A\33[2K");
-
-        board.resetCells();
-    }
-
 
     public void printBoard() {
         board.printGame(this.px, this.py);
