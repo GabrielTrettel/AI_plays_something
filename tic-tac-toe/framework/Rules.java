@@ -3,12 +3,14 @@ public class Rules {
     private Board board;
     private Player px, py;
 
+
     public Rules(Player px, Player py) {
         board = new Board(px, py);
         this.px = px;
         this.py = py;
         game_status = true;
     }
+
 
     public boolean getGameStatus() {
         return this.game_status;
@@ -23,6 +25,7 @@ public class Rules {
         else
             return px;
     }
+
     // Descobre quem vai segundo
     public Player getSecondPlayer() {
         if (px.getLabel() == 'O') {
@@ -37,9 +40,8 @@ public class Rules {
         int[] cord = p.getMove(board);
 
         // Verifica se podemos realizar a jogada desejada
-        if(!checkMove( board, cord[0], cord[1] )) {
+        if(!checkMove( board, cord[0], cord[1] ))
             return false;
-        }
 
         board.setMove(p, cord[0], cord[1]);
         return true;
@@ -52,19 +54,18 @@ public class Rules {
         else
             return true;
     }
-    public void cleanBoard() {
+
+    public void eraseBoard() {
         // Apaga as linhas já escritas no console
         for(int x=0; x<8; ++x)
             System.out.print("\33[1A\33[2K");
-
     }
-    public void cleanBoard(int i) {
+
+    public void eraseBoard(int i) {
         // Apaga as linhas já escritas no console
         for(int x=0; x<i; ++x)
             System.out.print("\33[1A\33[2K");
-
     }
-
 
     // Valida se algém ganhou ou se deu velha
     public boolean validate(Player px, Player py) {
@@ -82,18 +83,12 @@ public class Rules {
             return true;
     }
 
-
-
     private void congratPlayer(Player p) {
-        // for(int x=0; x<8; ++x)
-        //     System.out.print("\33[1A\33[2K");
-
         System.out.printf("O jogador %s ganhou o jogo!\n", p.getName());
     }
 
     public void printBoard() {
         board.printGame(this.px, this.py);
     }
-
 
 }

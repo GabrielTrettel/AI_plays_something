@@ -6,6 +6,7 @@ public class Ai extends Player {
     private Random generator;
     private String name;
 
+
     public Ai(Player p) {
         this.is_ai = true;
         this.level = 0;
@@ -13,21 +14,9 @@ public class Ai extends Player {
         this.setLabel(p);
         this.setName();
     }
-    // Sobrescrita de método para se aproveitar do polimorfismo de player e Ai
-    @Override
-    public void setName() {
-        if(this.level == 0)
-            this.name = "Chuck Norris";
-        else if( this.level == 1)
-            this.name = "Rick Sanches";
-        else if( this.level == 2)
-            this.name = "Morty Smith";
-        else if( this.level == 3)
-            this.name = "Mr. Poopybutt";
-        else if( this.level == 4)
-            this.name = "Jerry Smith";
 
-    }
+
+    // Sobrescrita de método para se aproveitar do polimorfismo de player e Ai
     @Override
     public String getName() {
         return this.name;
@@ -43,9 +32,21 @@ public class Ai extends Player {
         else
             moves = thinkBestMove(board);
 
-
         return moves;
+    }
 
+    @Override
+    public void setName() {
+        if(this.level == 0)
+            this.name = "Chuck Norris";
+        else if( this.level == 1)
+            this.name = "Rick Sanches";
+        else if( this.level == 2)
+            this.name = "Morty Smith";
+        else if( this.level == 3)
+            this.name = "Mr. Poopybutt";
+        else if( this.level == 4)
+            this.name = "Jerry Smith";
     }
 
     @Override
@@ -57,6 +58,7 @@ public class Ai extends Player {
 
         setLevel();   // POG : Programação Orientada a Gambiarra
     }
+
 
     private void setLevel() {
         int lvl;
@@ -79,8 +81,6 @@ public class Ai extends Player {
         Board new_board = board;
         int best_score = -1000;
 
-
-
         for(int[] move : avaliableCells) {
             new_board.setMove(true, move[0], move[1]);
 
@@ -97,6 +97,7 @@ public class Ai extends Player {
 
         return best_move;
     }
+
     private int currScore(Board board) {
         if(board.checkWinner() == null || board.getFreeSpace() == 0)
             return 0;
@@ -105,9 +106,7 @@ public class Ai extends Player {
             return 10;
         else
             return -10;
-
     }
-
 
     private int minmax(Board nboard, int depth, boolean is_max) {
         Board board = nboard;
@@ -148,4 +147,5 @@ public class Ai extends Player {
             return best;
         }
     }
+
 }

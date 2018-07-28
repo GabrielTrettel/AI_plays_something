@@ -1,87 +1,109 @@
 import java.util.Scanner;
-/*
-       A idéia que ainda falta resolver no game loop é colocar um laço externo ao
-     while já criado para continuar as partidas. Seria legal implementar uma
-     ferramenta que consiga alterar os jogadores ou então mante-los iguais. Caso
-     o usuário opte por não mudar os jogadores, poderiamos implementar alguma forma
-     de pontuar as partidas (mostrando no console mesmo) desses dois usuários até
-     que um deles (ou os dois?) saiam do jogo.
-        Também seria legal implementar aqui uma forma de salvar os resultados como
-     for dito no arquivo Player.java
 
-
-
-*/
 class GameLoop {
+    private static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
-
-        Player px = new Player();
-        px.setName();
-        px.askLabel();
-
-        Scanner sc1 = new Scanner(System.in);
+    public static boolean askIfAi() {
         System.out.printf("Jogar contra computador? [s/N] ");
-        char ans = sc1.next().toLowerCase().charAt(0);
+        char ans = sc.next().toLowerCase().charAt(0);
+        System.out.print("\33[1A\33[2K");
 
-        Player py;
+        if (ans == 's')
+            return true;
+        else
+            return false;
+    }
 
-        if (ans == 's') {
-            Ai ai = new Ai();
-            Player ai_player = ai;   // Exemplo de polimorfismo.
+    public static boolean askIfContinue() {
+        System.out.printf("Continue? [s/N] ");
+        char ans = sc.next().toLowerCase().charAt(0);
+        System.out.print("\33[1A\33[2K");
 
-            // ATENÇÃO O JOGADOR ARTIFICIAL PRECISARÁ SEMPRE SER O SEGUNDO ARGUMENTO DOS MÉTODOS
-            py = ai_player;
-            py.setLabel(px);
-            // System.out.println(px.getIsAi());
-        }
-        else {
+        if (ans == 's')
+            return true;
+        else
+            return false;
+    }
+
+    public static boolean askIfSamePlayers() {
+        System.out.printf("São os mesmos jogadores? [s/N] ");
+        char ans = sc.next().toLowerCase().charAt(0);
+        System.out.print("\33[1A\33[2K");
+
+        if (ans == 's')
+            return true;
+        else
+            return false;
+    }
+
+    public static Player[] setPlayers() {
+        Player px, py;
+        if( askIfAi() ) {
+            px = new Player();
+            px.setName();
+            px.setLabel();
+
+            Ai ai = new Ai(px);
+            py = ai;
+        } else {
+            px = new Player();
+            px.setName();
+            px.setLabel();
+
             py = new Player();
             py.setName();
             py.setLabel(px);
         }
 
-        Rules game = new Rules(px, py);
-        boolean continue_game =  true;
+        Player[] players = {px, py};
+        return players;
+    }
 
-        do {
+    public static void runGame(Rules game) {
+        Player px = game.getFirstPlayer();
+        Player py = game.getSecondPlayer();
 
+        while(game.getGameStatus()) {
             game.printBoard();
-            while(game.getGameStatus()) {
 
-                // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-                while(!game.makeMove(game.getFirstPlayer()));
-
-                if(!game.validate(px, py)) {
-                    game.printBoard();
-                    break;
-                }
-
+            // Jogador 1 faz sua jogada e é verificado se ele ganhou.
+            while( !game.makeMove(px) );
+            if( !game.validate(px, py) ) {
+                game.eraseBoard();
                 game.printBoard();
-
-                // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-                while(!game.makeMove(game.getSecondPlayer()));
-
-                if(!game.validate(px, py)) {
-                    game.printBoard();
-                    break;
-                }
-
-                game.printBoard();
+                break;
             }
 
-            Scanner sc2 = new Scanner(System.in);
-            System.out.printf("Continue? [s/N] ");
-            char ans2 = sc2.next().charAt(0);
+            game.eraseBoard();
+            game.printBoard();
 
+            // Jogador 2 faz sua jogada e é verificado se ele ganhou.
+            while( !game.makeMove(py) );
+            if( !game.validate(px, py) ) {
+                game.eraseBoard();
+                game.printBoard();
+                break;
+            }
 
-            if (ans2 == 's')
-                continue_game = true;
-            else
-                continue_game = false;
-
-            game.resetBoard();
-
-        } while(continue_game);
+            game.eraseBoard();
+        }
     }
+
+    public static void main(String[] args) {
+        Player[] ps = setPlayers();
+        boolean status = true;
+
+        do {
+            Rules game = new Rules(ps[0], ps[1]);
+
+            runGame(game);
+
+            status = askIfContinue();
+            game.eraseBoard(9);
+
+            if(status && !askIfSamePlayers())
+                ps = setPlayers();
+        } while (status);
+    }
+
 }

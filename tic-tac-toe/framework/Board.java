@@ -7,6 +7,7 @@ public class Board {
     private Player px;
     private Player py;
 
+
     public Board(Player px, Player py) {
         round = 0;
         free_space = 9;
@@ -14,6 +15,7 @@ public class Board {
         this.px = px;
         this.py = py;
     }
+
 
     public int getRound(){
         return round;
@@ -35,6 +37,7 @@ public class Board {
 
         return null;
     }
+
     public Player getAiObj() {
         if (px.IsAi())
             return px;
@@ -58,6 +61,7 @@ public class Board {
         this.c[x][y].setOwnership(p);
         this.free_space--;
     }
+
     public void setMove(boolean p, int x, int y) {
         if (p)
             this.c[x][y].setOwnership(this.getAiObj());
@@ -71,6 +75,7 @@ public class Board {
         this.c[x][y].resetOwnership();
         this.free_space++;
     }
+
     public void resetCells() {
         for(int i=0; i<3; ++i)
             for(int j=0; j<3; ++j)
@@ -112,7 +117,6 @@ public class Board {
 
     }
 
-
     // Verifica se algum jogador ganhou completando pelas colunas da matriz
     private int checkColumns() {
         if( c[0][0].getID() == c[1][0].getID() && c[1][0].getID() == c[2][0].getID())
@@ -124,7 +128,6 @@ public class Board {
 
         return -1;
     }
-
 
     // Verifica se algum jogador ganhou completando pelas linhas da matriz
     private int checkLines() {
@@ -138,7 +141,6 @@ public class Board {
         return -1;
     }
 
-
     // Verifica se algum jogador ganhou completando pelas diagonais da matriz
     private int checkDiagonals() {
         if( c[0][0].getID() == c[1][1].getID() && c[1][1].getID() == c[2][2].getID())
@@ -148,7 +150,7 @@ public class Board {
 
         return -1;
     }
-    
+
     public void printGame(Player px, Player py) {
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
