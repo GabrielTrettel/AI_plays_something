@@ -16,38 +16,41 @@ class GameLoop {
 
     public static void main(String[] args) {
 
-        Player p1 = new Player();
-        p1.setName();
+        Player px = new Player();
+        px.setName();
+        px.askLabel();
 
         Scanner sc1 = new Scanner(System.in);
         System.out.printf("Jogar contra computador? [s/N] ");
-        char ans = sc1.next().charAt(0);
+        char ans = sc1.next().toLowerCase().charAt(0);
 
-        Player p2;
+        Player py;
 
-        if (ans == 'S') {
+        if (ans == 's') {
             Ai ai = new Ai();
             Player ai_player = ai;   // Exemplo de polimorfismo.
 
             // ATENÇÃO O JOGADOR ARTIFICIAL PRECISARÁ SEMPRE SER O SEGUNDO ARGUMENTO DOS MÉTODOS
-            p2 = ai_player;
-            // System.out.println(p1.getIsAi());
+            py = ai_player;
+            // System.out.println(px.getIsAi());
         }
         else {
-            p2 = new Player();
-            p2.setName();
+            py = new Player();
+            py.setName();
+            py.setLabel(px);
         }
 
-        Rules game = new Rules(p1, p2);
+        Rules game = new Rules(px, py);
+        boolean continue_game =  true;
 
         do {
             game.printBoard();
             while(game.getGameStatus()) {
 
                 // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-                while(!game.makeMove(p1));
+                while(!game.makeMove(game.getFirstPlayer()));
 
-                if(!game.validate(p1, p2)) {
+                if(!game.validate(px, py)) {
                     game.printBoard();
                     break;
                 }
@@ -55,9 +58,9 @@ class GameLoop {
                 game.printBoard();
 
                 // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-                while(!game.makeMove(p2));
+                while(!game.makeMove(game.getSecondPlayer()));
 
-                if(!game.validate(p1, p2)) {
+                if(!game.validate(px, py)) {
                     game.printBoard();
                     break;
                 }
@@ -69,11 +72,14 @@ class GameLoop {
             System.out.printf("Continue? [s/N] ");
             char ans2 = sc2.next().charAt(0);
 
-            if (ans2 == 'S')
-                game.setGameStatus(true);
+
+            if (ans2 == 's')
+                continue_game = true;
+            else
+                continue_game = false;
 
             game.resetBoard();
 
-        } while(game.getGameStatus());
+        } while(continue_game);
     }
 }

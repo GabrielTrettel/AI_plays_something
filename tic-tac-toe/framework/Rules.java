@@ -1,20 +1,35 @@
 public class Rules {
     private boolean game_status;
     private Board board;
-    private Player p1, p2;
+    private Player px, py;
 
-    public Rules(Player p1, Player p2) {
-        board = new Board(p1, p2);
-        this.p1 = p1;
-        this.p2 = p2;
+    public Rules(Player px, Player py) {
+        board = new Board(px, py);
+        this.px = px;
+        this.py = py;
         game_status = true;
     }
 
     public boolean getGameStatus() {
         return this.game_status;
     }
-    public void setGameStatus(boolean game_status) {
-        this.game_status = game_status;
+
+    // Bizarro, mas funciona xD
+    // Descobre quem vai primeiro
+    public Player getFirstPlayer() {
+        if (py.getLabel() == 'X') {
+            return py;
+        }
+        else
+            return px;
+    }
+    // Descobre quem vai segundo
+    public Player getSecondPlayer() {
+        if (px.getLabel() == 'O') {
+            return px;
+        }
+        else
+            return py;
     }
 
     // Efetua a jogada que o usuário está tentando fazer
@@ -40,7 +55,7 @@ public class Rules {
 
 
     // Valida se algém ganhou ou se deu velha
-    public boolean validate(Player p1, Player p2) {
+    public boolean validate(Player px, Player py) {
         Player winner = board.checkWinner();
 
         if(board.getFreeSpace() == 0 ) {
@@ -73,7 +88,7 @@ public class Rules {
 
 
     public void printBoard() {
-        board.printGame(this.p1, this.p2);
+        board.printGame(this.px, this.py);
     }
 
 

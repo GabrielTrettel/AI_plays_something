@@ -15,11 +15,18 @@ public class Cell {
     }
     public void setOwnership(Player p) {
         this.id = p.getID();
-        this.label = (this.id % 2 != 0) ? 'X' : 'O';
+        this.label = p.getLabel();
 
     }
     public void resetOwnership() {
         this.id = 0;
         this.label = ' ';
+    }
+
+    public boolean isEmpty() {
+        if (this.id == 0)
+            return true;
+        else
+            return false;
     }
 }

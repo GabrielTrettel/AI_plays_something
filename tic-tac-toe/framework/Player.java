@@ -53,7 +53,26 @@ public class Player {
         this.name = sc1.nextLine();
     }
 
-    public boolean getIsAi() {
+    public void askLabel() {
+        Scanner sc1 = new Scanner(System.in);
+        System.out.printf("Jogador %d: X ou O? ", this.player_id);
+        this.label = sc1.next().toUpperCase().charAt(0);
+        System.out.print("\33[1A\33[2K");
+
+        while (this.label != 'X' && this.label != 'O') {
+            System.out.printf("Peça inválida. %s, por favor, escolha novamente\n", this.getName());
+            this.label = sc1.next().toUpperCase().charAt(0);
+            System.out.print("\33[1A\33[2K");
+        }
+    }
+    public void setLabel(Player p) {
+        if (p.getLabel() == 'X')
+            this.label = 'O';
+        else
+            this.label = 'X';
+    }
+
+    public boolean IsAi() {
         return this.is_ai;
     }
 
@@ -69,6 +88,9 @@ public class Player {
     }
     public String getName() {
         return this.name;
+    }
+    public char getLabel() {
+        return this.label;
     }
 
     public int[] getMove(Board b) {

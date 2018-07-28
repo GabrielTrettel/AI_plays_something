@@ -1,32 +1,18 @@
-/**
-       Aqui colocaremos a matriz, que ainda precisa ser ajustada para ser de objetos
-    e não de estruturas primitivas. Como optamos por usar GUI, acho que seria legal
-    criar uma classe "peça", por exemplo, e lá colocarmos seu rótulo ('X', 'O' ou ' '),
-    cor e outras informações legais.
-
-    Inicialmente, só por questão de testes, farei uma matriz 3x3 de inteiros
-    em que cada numero (o ID do jogador) representará um jogador e o valor 0
-    será para uma posição livre. A idéia de fazer isso é coseguir já desenvolver
-    a IA e construir a GUI.
-
-**/
-
 import java.util.ArrayList;
 
 public class Board {
-    private Cell[][] c;
+    private Cell[][] c = new Cell[3][3];
     private int round;
     private int free_space;
-    private Player p1;
-    private Player p2;
+    private Player px;
+    private Player py;
 
-    public Board(Player p1, Player p2) {
-        c = new Cell[3][3];
+    public Board(Player px, Player py) {
         round = 0;
         free_space = 9;
         c = fillBoard(c);
-        this.p1 = p1;
-        this.p2 = p2;
+        this.px = px;
+        this.py = py;
     }
 
     public int getRound(){
@@ -42,28 +28,45 @@ public class Board {
     }
 
     public Player getHumanObj() {
-        return p1;
+        if (!px.IsAi())
+            return px;
+        else if (!py.IsAi())
+            return py;
+
+        return null;
     }
     public Player getAiObj() {
-        return p2;
-    }
-
-    public Player getOpponent(Player p) {
-        if( p.getID() == this.p1.getID() )
-            return this.p2;
-        else if( p.getID() == this.p2.getID() )
-            return this.p1;
+        if (px.IsAi())
+            return px;
+        else if (py.IsAi())
+            return py;
 
         return null;
     }
 
-    // !IMPORTANTE! O jogo preenche a matriz com os id's dos jogadores.
-    // Dessa forma, fica trivial ver de quem é a jogada ganhadora.
+    public Player getOpponent(Player p) {
+        if( p.getID() == this.px.getID() )
+            return this.py;
+        else if( p.getID() == this.py.getID() )
+            return this.px;
+
+        return null;
+    }
+
     public void setMove(Player p, int x, int y) {
         // System.out.println(p.getID());
         this.c[x][y].setOwnership(p);
         this.free_space--;
     }
+    public void setMove(boolean p, int x, int y) {
+        if (p)
+            this.c[x][y].setOwnership(this.getAiObj());
+        else
+            this.c[x][y].setOwnership(this.getHumanObj());
+
+        this.free_space--;
+    }
+
     public void resetMove(int x, int y) {
         this.c[x][y].resetOwnership();
         this.free_space++;
@@ -89,10 +92,10 @@ public class Board {
         int lin = checkLines();
         int dia = checkDiagonals();
 
-        if( col == p1.getID() || lin == p1.getID() || dia == p1.getID() )
-            return p1;
-        else if ( col == p2.getID() || lin == p2.getID() || dia == p2.getID() )
-            return p2;
+        if( col == px.getID() || lin == px.getID() || dia == px.getID() )
+            return px;
+        else if ( col == py.getID() || lin == py.getID() || dia == py.getID() )
+            return py;
         else
             return null;
     }
@@ -148,7 +151,7 @@ public class Board {
 
 
 
-    public void printGame(Player p1, Player p2) {
+    public void printGame(Player px, Player py) {
 
         // System.out.printf("Round %d\n", round);
 
@@ -159,26 +162,24 @@ public class Board {
         System.out.println(":  0    1    2");
         System.out.println(":---------------");
         System.out.printf(":0 | %c | %c | %c |\n", c[0][0].getLabel(), c[0][1].getLabel(), c[0][2].getLabel());
-        System.out.printf(":  -------------             %s -> X\n", p1.getName());
-        System.out.printf(":1 | %c | %c | %c |             %s -> O\n", c[1][0].getLabel(), c[1][1].getLabel(), c[1][2].getLabel(), p2.getName());
+        System.out.printf(":  -------------             %s -> %c\n", px.getName(), px.getLabel());
+        System.out.printf(":1 | %c | %c | %c |             %s -> %c\n", c[1][0].getLabel(), c[1][1].getLabel(), c[1][2].getLabel(), py.getName(), py.getLabel());
         System.out.println(":  -------------");
         System.out.printf(":2 | %c | %c | %c |\n", c[2][0].getLabel(), c[2][1].getLabel(), c[2][2].getLabel());
         System.out.println(":---------------");
     }
 
-    public ArrayList<int[]> getFreeCells() {
+    public int[][] getFreeCells() {
         // int[][] free_cells = new int[][2]
-        ArrayList<int[]> free_cells = new ArrayList<int[]>();  // famoso exoterismo
+        int[][] free_cells = new int[this.free_space][2];  // famoso exoterismo
 
-
+        int ctd = 0;
         for( int i=0; i<3; ++i ) {
             for( int j=0; j<3; ++j ) {
-                if( c[i][j].getID() == 0 ) {
-                    // System.out.printf("%d - %d\n", i, j);
-                    int[] pair = new int[2];
-                    pair[0] = i;
-                    pair[1] = j;
-                    free_cells.add(pair);
+                if( c[i][j].isEmpty() ) {
+                    int[] pair = {i, j};
+                    free_cells[ctd] = pair;
+                    ctd++;
                 }
             }
         }
