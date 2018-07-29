@@ -33,6 +33,7 @@ class GameLoop {
         if (ans == 's')
             return true;
         else
+            ScoreBoard.resetScore();
             return false;
     }
 
