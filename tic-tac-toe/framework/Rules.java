@@ -78,6 +78,7 @@ public class Rules {
 
         if (winner != null) {
             congratPlayer(winner);
+            ScoreBoard.setScore(winner.getLabel());
             return false;
         } else
             return true;
