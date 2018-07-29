@@ -67,7 +67,7 @@ class GameLoop {
         while (game.getGameStatus()) {
             game.printBoard();
 
-            // Jogador 1 faz sua jogada.
+            // Jogador 1 faz a sua jogada.
             while (!game.makeMove(px));
 
             game.eraseBoard();
