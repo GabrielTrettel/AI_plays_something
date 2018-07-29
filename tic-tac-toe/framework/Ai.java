@@ -74,14 +74,28 @@ public class Ai extends Player {
 
         this.level = lvl;
     }
+    private int[][] shuffleArray(int[][] arr) {
+        for(int i=0; i<arr.length; i++) {
+            int index = generator.nextInt(i+1);
+
+            int[] aux = arr[index];
+            arr[index] = arr[i];
+            arr[i] = aux;
+        }
+        return arr;
+    }
+
 
     private int[] thinkBestMove(Board board) {
-        int[][] avaliableCells = board.getFreeCells();
+        int[][] avaliableCells = shuffleArray(board.getFreeCells());
         int[] best_move = {-1, -1};
         Board new_board = board;
         int best_score = -1000;
 
+
         for (int[] move : avaliableCells) {
+            // System.out.printf("%d - %d\n", move[0], move[1]);
+
             new_board.setMove(true, move[0], move[1]);
 
             int move_score = minmax(new_board, 0, false);
@@ -99,7 +113,7 @@ public class Ai extends Player {
     }
 
     private int currScore(Board board) {
-        if (board.checkWinner() == null || board.getFreeSpace() == 0)
+        if (board.checkWinner() == null)
             return 0;
 
         if (board.checkWinner().IsAi() == true)
@@ -115,6 +129,7 @@ public class Ai extends Player {
 
         if (score == 10 || score == -10)
             return score - depth;
+
         if (board.getFreeSpace() == 0)
             return 0 - depth;
 
