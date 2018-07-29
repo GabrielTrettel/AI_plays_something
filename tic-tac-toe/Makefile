@@ -13,7 +13,7 @@ PHONY: all
 
 all:
 	@printf "\e[34mMaking build dir\e[0m\n"
-	@mkdir $(BUILD)
+	@mkdir -p $(BUILD)
 	@printf "\e[36mBuilding...\e[0m\n"
 	@$(MAKE) --no-print-directory -C $(FRAMEWORK)
 #	@$(MAKE) --no-print-directory -C $(GUI)

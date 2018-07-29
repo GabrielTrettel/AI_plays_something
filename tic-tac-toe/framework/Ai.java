@@ -27,7 +27,7 @@ public class Ai extends Player {
         float probability = this.generator.nextFloat();
         int[] moves;
 
-        if((this.level*5) > probability*15 || (this.level*5) == 20)
+        if ((this.level*5) > probability*15 || (this.level*5) == 20)
             moves = board.getFreeCells()[ this.generator.nextInt( board.getFreeSpace()-1 ) ];
         else
             moves = thinkBestMove(board);
@@ -37,15 +37,15 @@ public class Ai extends Player {
 
     @Override
     public void setName() {
-        if(this.level == 0)
+        if (this.level == 0)
             this.name = "Chuck Norris";
-        else if( this.level == 1)
+        else if ( this.level == 1)
             this.name = "Rick Sanches";
-        else if( this.level == 2)
+        else if ( this.level == 2)
             this.name = "Morty Smith";
-        else if( this.level == 3)
+        else if ( this.level == 3)
             this.name = "Mr. Poopybutt";
-        else if( this.level == 4)
+        else if ( this.level == 4)
             this.name = "Jerry Smith";
     }
 
@@ -70,7 +70,7 @@ public class Ai extends Player {
             System.out.print("\33[1A\33[2K");
             System.out.print("\33[1A\33[2K");
             System.out.print("\33[1A\33[2K");
-        } while(lvl < 0 || lvl > 4);
+        } while (lvl < 0 || lvl > 4);
 
         this.level = lvl;
     }
@@ -81,14 +81,14 @@ public class Ai extends Player {
         Board new_board = board;
         int best_score = -1000;
 
-        for(int[] move : avaliableCells) {
+        for (int[] move : avaliableCells) {
             new_board.setMove(true, move[0], move[1]);
 
             int move_score = minmax(new_board, 0, false);
 
             new_board.resetMove(move[0], move[1]);
 
-            if(move_score > best_score) {
+            if (move_score > best_score) {
                 best_move[0] = move[0];
                 best_move[1] = move[1];
                 best_score = move_score;
@@ -99,10 +99,10 @@ public class Ai extends Player {
     }
 
     private int currScore(Board board) {
-        if(board.checkWinner() == null || board.getFreeSpace() == 0)
+        if (board.checkWinner() == null || board.getFreeSpace() == 0)
             return 0;
 
-        if( board.checkWinner().IsAi() == true )
+        if (board.checkWinner().IsAi() == true)
             return 10;
         else
             return -10;
@@ -113,17 +113,17 @@ public class Ai extends Player {
 
         int score = currScore(board);
 
-        if(score == 10 || score == -10)
+        if (score == 10 || score == -10)
             return score - depth;
-        if(board.getFreeSpace() == 0)
+        if (board.getFreeSpace() == 0)
             return 0 - depth;
 
-        if(is_max) {
+        if (is_max) {
             int best = -1000;
 
-            for(int x=0; x<3; ++x) {
-                for(int y=0; y<3; ++y) {
-                    if(board.getCell(x, y).isEmpty()) {
+            for (int x=0; x<3; ++x) {
+                for (int y=0; y<3; ++y) {
+                    if (board.getCell(x, y).isEmpty()) {
                         board.setMove(true, x, y);
                         best = Math.max(minmax(board, depth+1, !is_max), best);
                         board.resetMove(x, y);
@@ -135,9 +135,9 @@ public class Ai extends Player {
         } else {
             int best = 1000;
 
-            for(int x=0; x<3; ++x) {
-                for(int y=0; y<3; ++y) {
-                    if(board.getCell(x, y).isEmpty()) {
+            for (int x=0; x<3; ++x) {
+                for (int y=0; y<3; ++y) {
+                    if (board.getCell(x, y).isEmpty()) {
                         board.setMove(false, x, y);
                         best = Math.min(minmax(board, depth+1, !is_max), best);
                         board.resetMove(x, y);

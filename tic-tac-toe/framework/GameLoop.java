@@ -38,7 +38,7 @@ class GameLoop {
 
     public static Player[] setPlayers() {
         Player px, py;
-        if( askIfAi() ) {
+        if (askIfAi()) {
             px = new Player();
             px.setName();
             px.setLabel();
@@ -63,25 +63,29 @@ class GameLoop {
         Player px = game.getFirstPlayer();
         Player py = game.getSecondPlayer();
 
-        while(game.getGameStatus()) {
+        while (game.getGameStatus()) {
             game.printBoard();
 
-            // Jogador 1 faz sua jogada e é verificado se ele ganhou.
-            while( !game.makeMove(px) );
-            if( !game.validate(px, py) ) {
-                game.eraseBoard();
-                game.printBoard();
+            // Jogador 1 faz sua jogada.
+            while (!game.makeMove(px));
+
+            game.eraseBoard();
+            game.printBoard();
+            // Verifica se jogador 1 ganhou.
+            if (!game.validate(px, py)) {
                 break;
             }
 
             game.eraseBoard();
             game.printBoard();
 
-            // Jogador 2 faz sua jogada e é verificado se ele ganhou.
-            while( !game.makeMove(py) );
-            if( !game.validate(px, py) ) {
-                game.eraseBoard();
-                game.printBoard();
+            // Jogador 2 faz sua jogada.
+            while (!game.makeMove(py));
+
+            game.eraseBoard();
+            game.printBoard();
+            // Verifica se jogador 2 ganhou.
+            if (!game.validate(px, py)) {
                 break;
             }
 

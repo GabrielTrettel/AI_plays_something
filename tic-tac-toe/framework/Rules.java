@@ -40,7 +40,7 @@ public class Rules {
         int[] cord = p.getMove(board);
 
         // Verifica se podemos realizar a jogada desejada
-        if(!checkMove( board, cord[0], cord[1] ))
+        if (!checkMove( board, cord[0], cord[1] ))
             return false;
 
         board.setMove(p, cord[0], cord[1]);
@@ -49,7 +49,7 @@ public class Rules {
 
     // Verifica se a jogada que o usuário pretende fazer é válida
     private boolean checkMove(Board board, int cordX, int cordY) {
-        if( board.getCell(cordX, cordY).getID() != 0 )
+        if (board.getCell(cordX, cordY).getID() != 0)
             return false;
         else
             return true;
@@ -57,13 +57,13 @@ public class Rules {
 
     public void eraseBoard() {
         // Apaga as linhas já escritas no console
-        for(int x=0; x<8; ++x)
+        for (int x=0; x<8; ++x)
             System.out.print("\33[1A\33[2K");
     }
 
     public void eraseBoard(int i) {
         // Apaga as linhas já escritas no console
-        for(int x=0; x<i; ++x)
+        for (int x=0; x<i; ++x)
             System.out.print("\33[1A\33[2K");
     }
 
@@ -71,12 +71,12 @@ public class Rules {
     public boolean validate(Player px, Player py) {
         Player winner = board.checkWinner();
 
-        if(board.getFreeSpace() == 0 ) {
+        if (board.getFreeSpace() == 0) {
             this.game_status = false;
             return false;
         }
 
-        if( winner != null ) {
+        if (winner != null) {
             congratPlayer(winner);
             return false;
         } else

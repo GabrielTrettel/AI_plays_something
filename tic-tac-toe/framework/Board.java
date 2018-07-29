@@ -48,16 +48,15 @@ public class Board {
     }
 
     public Player getOpponent(Player p) {
-        if( p.getID() == this.px.getID() )
+        if (p.getID() == this.px.getID())
             return this.py;
-        else if( p.getID() == this.py.getID() )
+        else if (p.getID() == this.py.getID())
             return this.px;
 
         return null;
     }
 
     public void setMove(Player p, int x, int y) {
-        // System.out.println(p.getID());
         this.c[x][y].setOwnership(p);
         this.free_space--;
     }
@@ -77,16 +76,16 @@ public class Board {
     }
 
     public void resetCells() {
-        for(int i=0; i<3; ++i)
-            for(int j=0; j<3; ++j)
+        for (int i=0; i<3; ++i)
+            for (int j=0; j<3; ++j)
                 c[i][j].resetOwnership();
 
         this.free_space = 9;
     }
 
     private Cell[][] fillBoard(Cell[][] t) {
-        for(int i=0; i<3; ++i)
-            for(int j=0; j<3; ++j)
+        for (int i=0; i<3; ++i)
+            for (int j=0; j<3; ++j)
                 t[i][j] = new Cell();
 
         return t;
@@ -97,9 +96,9 @@ public class Board {
         int lin = checkLines();
         int dia = checkDiagonals();
 
-        if( col == px.getID() || lin == px.getID() || dia == px.getID() )
+        if (col == px.getID() || lin == px.getID() || dia == px.getID())
             return px;
-        else if ( col == py.getID() || lin == py.getID() || dia == py.getID() )
+        else if (col == py.getID() || lin == py.getID() || dia == py.getID())
             return py;
         else
             return null;
@@ -110,7 +109,7 @@ public class Board {
         int lin = checkLines();
         int dia = checkDiagonals();
 
-        if( col == p.getID() || lin == p.getID() || dia == p.getID() )
+        if (col == p.getID() || lin == p.getID() || dia == p.getID())
             return true;
 
         return false;
@@ -119,11 +118,11 @@ public class Board {
 
     // Verifica se algum jogador ganhou completando pelas colunas da matriz
     private int checkColumns() {
-        if( c[0][0].getID() == c[1][0].getID() && c[1][0].getID() == c[2][0].getID())
+        if (c[0][0].getID() == c[1][0].getID() && c[1][0].getID() == c[2][0].getID())
             return c[0][0].getID();
-        else if ( c[0][1].getID() == c[1][1].getID() && c[1][1].getID() == c[2][1].getID())
+        else if (c[0][1].getID() == c[1][1].getID() && c[1][1].getID() == c[2][1].getID())
             return c[0][1].getID();
-        else if ( c[0][2].getID() == c[1][2].getID() && c[1][2].getID() == c[2][2].getID())
+        else if (c[0][2].getID() == c[1][2].getID() && c[1][2].getID() == c[2][2].getID())
             return c[0][2].getID();
 
         return -1;
@@ -131,11 +130,11 @@ public class Board {
 
     // Verifica se algum jogador ganhou completando pelas linhas da matriz
     private int checkLines() {
-        if( c[0][0].getID() == c[0][1].getID() && c[0][1].getID() == c[0][2].getID())
+        if (c[0][0].getID() == c[0][1].getID() && c[0][1].getID() == c[0][2].getID())
             return c[0][0].getID();
-        else if ( c[1][0].getID() == c[1][1].getID() && c[1][1].getID() == c[1][2].getID())
+        else if (c[1][0].getID() == c[1][1].getID() && c[1][1].getID() == c[1][2].getID())
             return c[1][0].getID();
-        else if ( c[2][0].getID() == c[2][1].getID() && c[2][1].getID() == c[2][2].getID())
+        else if (c[2][0].getID() == c[2][1].getID() && c[2][1].getID() == c[2][2].getID())
             return c[2][0].getID();
 
         return -1;
@@ -143,9 +142,9 @@ public class Board {
 
     // Verifica se algum jogador ganhou completando pelas diagonais da matriz
     private int checkDiagonals() {
-        if( c[0][0].getID() == c[1][1].getID() && c[1][1].getID() == c[2][2].getID())
+        if (c[0][0].getID() == c[1][1].getID() && c[1][1].getID() == c[2][2].getID())
             return c[0][0].getID();
-        else if( c[0][2].getID() == c[1][1].getID() && c[1][1].getID() == c[2][0].getID())
+        else if (c[0][2].getID() == c[1][1].getID() && c[1][1].getID() == c[2][0].getID())
             return c[0][2].getID();
 
         return -1;
@@ -166,9 +165,9 @@ public class Board {
         int[][] free_cells = new int[this.free_space][2];
 
         int ctd = 0;
-        for( int i=0; i<3; ++i ) {
-            for( int j=0; j<3; ++j ) {
-                if( c[i][j].isEmpty() ) {
+        for (int i=0; i<3; ++i) {
+            for (int j=0; j<3; ++j) {
+                if (c[i][j].isEmpty()) {
                     int[] pair = {i, j};
                     free_cells[ctd] = pair;
                     ctd++;

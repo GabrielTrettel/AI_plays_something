@@ -56,7 +56,7 @@ public class Player {
         int a = sc1.nextInt();
         System.out.print("\33[1A\33[2K");
 
-        while(a>2 || a<0) {
+        while (a>2 || a<0) {
             System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
@@ -71,7 +71,7 @@ public class Player {
         int a = sc1.nextInt();
         System.out.print("\33[1A\33[2K");
 
-        while(a>2 || a<0) {
+        while (a>2 || a<0) {
             System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
             System.out.print("\33[1A\33[2K");
