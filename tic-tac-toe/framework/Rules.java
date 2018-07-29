@@ -17,7 +17,7 @@ public class Rules {
     }
 
     // Bizarro, mas funciona xD
-    // Descobre quem vai primeiro
+    // Descobre quem vai primeiro.
     public Player getFirstPlayer() {
         if (py.getLabel() == 'X') {
             return py;
@@ -26,7 +26,7 @@ public class Rules {
             return px;
     }
 
-    // Descobre quem vai segundo
+    // Descobre quem vai segundo.
     public Player getSecondPlayer() {
         if (px.getLabel() == 'O') {
             return px;
@@ -35,11 +35,11 @@ public class Rules {
             return py;
     }
 
-    // Efetua a jogada que o usuário está tentando fazer
+    // Efetua a jogada que o usuário está tentando fazer.
     public boolean makeMove(Player p) {
         int[] cord = p.getMove(board);
 
-        // Verifica se podemos realizar a jogada desejada
+        // Verifica se podemos realizar a jogada desejada.
         if (!checkMove( board, cord[0], cord[1] ))
             return false;
 
@@ -47,7 +47,7 @@ public class Rules {
         return true;
     }
 
-    // Verifica se a jogada que o usuário pretende fazer é válida
+    // Verifica se a jogada que o usuário pretende fazer é válida.
     private boolean checkMove(Board board, int cordX, int cordY) {
         if (board.getCell(cordX, cordY).getID() != 0)
             return false;
@@ -56,18 +56,18 @@ public class Rules {
     }
 
     public void eraseBoard() {
-        // Apaga as linhas já escritas no console
+        // Apaga as linhas já escritas no console.
         for (int x=0; x<8; ++x)
             System.out.print("\33[1A\33[2K");
     }
 
     public void eraseBoard(int i) {
-        // Apaga as linhas já escritas no console
+        // Apaga as linhas já escritas no console.
         for (int x=0; x<i; ++x)
             System.out.print("\33[1A\33[2K");
     }
 
-    // Valida se algém ganhou ou se deu velha
+    // Valida se algém ganhou ou se deu velha.
     public boolean validate(Player px, Player py) {
         Player winner = board.checkWinner();
 
