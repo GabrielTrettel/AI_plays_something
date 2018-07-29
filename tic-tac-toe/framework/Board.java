@@ -116,7 +116,7 @@ public class Board {
 
     }
 
-    // Verifica se algum jogador ganhou completando pelas colunas da matriz
+    // Verifica se algum jogador ganhou completando pelas colunas da matriz.
     private int checkColumns() {
         if (c[0][0].getID() == c[1][0].getID() && c[1][0].getID() == c[2][0].getID())
             return c[0][0].getID();
