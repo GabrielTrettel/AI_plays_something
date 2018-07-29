@@ -70,18 +70,19 @@ public class Rules {
     // Valida se algém ganhou ou se deu velha.
     public boolean validate(Player px, Player py) {
         Player winner = board.checkWinner();
+        if (winner != null) {
+            congratPlayer(winner);
+            ScoreBoard.setScore(winner.getLabel());
+            return false;
+        }
 
         if (board.getFreeSpace() == 0) {
             this.game_status = false;
             return false;
         }
 
-        if (winner != null) {
-            congratPlayer(winner);
-            ScoreBoard.setScore(winner.getLabel());
-            return false;
-        } else
-            return true;
+        return true;
+
     }
 
     private void congratPlayer(Player p) {
