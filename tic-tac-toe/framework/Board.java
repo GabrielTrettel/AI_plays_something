@@ -4,8 +4,7 @@ public class Board {
     private Cell[][] c = new Cell[3][3];
     private int round;
     private int free_space;
-    private Player px;
-    private Player py;
+    private Player px, py;
 
 
     public Board(Player px, Player py) {
@@ -102,18 +101,6 @@ public class Board {
             return py;
         else
             return null;
-    }
-
-    public boolean checkWinnerPlayer(Player p) {
-        int col = checkColumns();
-        int lin = checkLines();
-        int dia = checkDiagonals();
-
-        if (col == p.getID() || lin == p.getID() || dia == p.getID())
-            return true;
-
-        return false;
-
     }
 
     // Verifica se algum jogador ganhou completando pelas colunas da matriz.

@@ -82,7 +82,6 @@ public class Rules {
         }
 
         return true;
-
     }
 
     private void congratPlayer(Player p) {

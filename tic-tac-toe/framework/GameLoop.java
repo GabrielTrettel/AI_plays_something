@@ -32,9 +32,10 @@ class GameLoop {
 
         if (ans == 's')
             return true;
-        else
+        else {
             ScoreBoard.resetScore();
             return false;
+        }
     }
 
     public static Player[] setPlayers() {
