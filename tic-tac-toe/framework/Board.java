@@ -24,10 +24,6 @@ public class Board {
     }
 
 
-    public int getRound(){
-        return round;
-    }
-
     public int getFreeSpace() {
         return free_space;
     }
@@ -54,20 +50,6 @@ public class Board {
         return null;
     }
 
-    public Player getOpponent(Player p) {
-        if (p.getID() == this.px.getID())
-            return this.py;
-        else if (p.getID() == this.py.getID())
-            return this.px;
-
-        return null;
-    }
-
-    public void setMove(Player p, int x, int y) {
-        this.c[x][y].setOwnership(p);
-        this.free_space--;
-    }
-
     public void setMove(boolean p, int x, int y) {
         if (p)
             this.c[x][y].setOwnership(this.getAiObj());
@@ -80,14 +62,6 @@ public class Board {
     public void resetMove(int x, int y) {
         this.c[x][y].resetOwnership();
         this.free_space++;
-    }
-
-    public void resetCells() {
-        for (int i=0; i<3; ++i)
-            for (int j=0; j<3; ++j)
-                c[i][j].resetOwnership();
-
-        this.free_space = 9;
     }
 
     private Cell[][] fillBoard(Cell[][] t) {

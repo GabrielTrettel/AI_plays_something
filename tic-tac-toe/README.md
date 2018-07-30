@@ -17,4 +17,4 @@ To compile, just run ```make``` from the source path on your computer.
 ## **License**
 This software is subject to the terms of the BSD 3-Clause License.
 
-Check the file LICENSE to see the full license requirements
+Check the file LICENSE to see the full license requirements.
