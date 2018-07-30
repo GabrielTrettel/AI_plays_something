@@ -1,9 +1,15 @@
+/*******************************************************************************
+* Copyright (c) 2018, Gabriel M. Trettel, Eric S. Karbstein,
+* Lucas Z. de Oliveira, ddom
+* All rights reserved.
+*
+* This Source Code Form is subject to the terms of the BSD 3-Clause License.
+*******************************************************************************/
+
 import java.util.Scanner;
 
 public class Player {
     protected String name;
-    protected int wins;     //TODO
-    protected int losses;     //TODO
     protected int player_id;
     protected boolean is_ai;
     protected char label;
@@ -11,8 +17,6 @@ public class Player {
 
 
     public Player() {
-        this.wins = 0;
-        this.losses = 0;
         this.is_ai = false;
         this.name = "Random";
         this.player_id = returnID();
@@ -21,14 +25,6 @@ public class Player {
 
     public String getName() {
         return this.name;
-    }
-
-    public int getWins() {
-        return this.wins;
-    }
-
-    public int getLosses() {
-        return this.losses;
     }
 
     public int getID() {

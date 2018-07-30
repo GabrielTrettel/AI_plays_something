@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (c) 2018, Gabriel M. Trettel, Eric S. Karbstein,
+* Lucas Z. de Oliveira, ddom
+* All rights reserved.
+*
+* This Source Code Form is subject to the terms of the BSD 3-Clause License.
+*******************************************************************************/
+
 import java.util.*;
 
 public class Ai extends Player {

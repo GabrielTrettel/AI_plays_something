@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (c) 2018, Gabriel M. Trettel, Eric S. Karbstein,
+* Lucas Z. de Oliveira, ddom
+* All rights reserved.
+*
+* This Source Code Form is subject to the terms of the BSD 3-Clause License.
+*******************************************************************************/
+
 public class Cell {
     private char label;
     private int id;
