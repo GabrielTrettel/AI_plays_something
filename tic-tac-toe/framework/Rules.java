@@ -13,7 +13,7 @@ public class Rules {
 
 
     public Rules(Player px, Player py) {
-        board = new Board(px, py);
+        board = new Board();
         this.px = px;
         this.py = py;
         game_status = true;
@@ -24,30 +24,45 @@ public class Rules {
         return this.game_status;
     }
 
-    // Bizarro, mas funciona xD
-    // Descobre quem vai primeiro.
+    public Board getBoard() {
+        return this.board;
+    }
+
     public Player getFirstPlayer() {
-        if (py.getLabel() == 'X') {
+        if (py.getLabel() == 'X')
             return py;
-        }
         else
             return px;
     }
 
-    // Descobre quem vai segundo.
     public Player getSecondPlayer() {
-        if (px.getLabel() == 'O') {
+        if (px.getLabel() == 'O')
             return px;
-        }
         else
             return py;
     }
 
-    // Efetua a jogada que o usuário está tentando fazer.
-    public boolean makeMove(Player p) {
-        int[] cord = p.getMove(board);
+    public Player getHumanObj() {
+        if (!px.IsAi())
+            return px;
+        else if (!py.IsAi())
+            return py;
 
-        // Verifica se podemos realizar a jogada desejada.
+        return null;
+    }
+
+    public Player getAiObj() {
+        if (px.IsAi())
+            return px;
+        else if (py.IsAi())
+            return py;
+
+        return null;
+    }
+
+    public boolean makeMove(Player p) {
+        int[] cord = p.getMove(this);
+
         if (!checkMove( board, cord[0], cord[1] ))
             return false;
 
@@ -55,7 +70,6 @@ public class Rules {
         return true;
     }
 
-    // Verifica se a jogada que o usuário pretende fazer é válida.
     private boolean checkMove(Board board, int cordX, int cordY) {
         if (board.getCell(cordX, cordY).getID() != 0)
             return false;
@@ -63,21 +77,20 @@ public class Rules {
             return true;
     }
 
-    public void eraseBoard() {
-        // Apaga as linhas já escritas no console.
+    // Apaga as linhas já escritas no console.
+    public static void eraseConsole() {
         for (int x=0; x<8; ++x)
             System.out.print("\33[1A\33[2K");
     }
 
-    public void eraseBoard(int i) {
-        // Apaga as linhas já escritas no console.
+    // Apaga uma quantidade 'i' de linhas já escritas no console.
+    public static void eraseConsole(int i) {
         for (int x=0; x<i; ++x)
             System.out.print("\33[1A\33[2K");
     }
 
-    // Valida se algém ganhou ou se deu velha.
     public boolean validate(Player px, Player py) {
-        Player winner = board.checkWinner();
+        Player winner = this.checkWinner();
         if (winner != null) {
             congratPlayer(winner);
             ScoreBoard.setScore(winner.getLabel());
@@ -96,8 +109,57 @@ public class Rules {
         System.out.printf("O jogador %s ganhou o jogo!\n", p.getName());
     }
 
-    public void printBoard() {
+    public void printConsole() {
         board.printGame(this.px, this.py);
+    }
+
+    public Player checkWinner() {
+        int col = checkColumns();
+        int lin = checkLines();
+        int dia = checkDiagonals();
+
+        if (col == px.getID() || lin == px.getID() || dia == px.getID())
+            return px;
+        else if (col == py.getID() || lin == py.getID() || dia == py.getID())
+            return py;
+        else
+            return null;
+    }
+
+    private int checkColumns() {
+        if (board.getCell(0,0).getID() == board.getCell(1,0).getID() && board.getCell(1,0).getID() == board.getCell(2,0).getID())
+            return board.getCell(0,0).getID();
+
+        else if (board.getCell(0,1).getID() == board.getCell(1,1).getID() && board.getCell(1,1).getID() == board.getCell(2,1).getID())
+            return board.getCell(0,1).getID();
+
+        else if (board.getCell(0,2).getID() == board.getCell(1,2).getID() && board.getCell(1,2).getID() == board.getCell(2,2).getID())
+            return board.getCell(0,2).getID();
+
+        return -1;
+    }
+
+    private int checkLines() {
+        if (board.getCell(0,0).getID() == board.getCell(0,1).getID() && board.getCell(0,1).getID() == board.getCell(0,2).getID())
+            return board.getCell(0,0).getID();
+
+        else if (board.getCell(1,0).getID() == board.getCell(1,1).getID() && board.getCell(1,1).getID() == board.getCell(1,2).getID())
+            return board.getCell(1,0).getID();
+
+        else if (board.getCell(2,0).getID() == board.getCell(2,1).getID() && board.getCell(2,1).getID() == board.getCell(2,2).getID())
+            return board.getCell(2,0).getID();
+
+        return -1;
+    }
+
+    private int checkDiagonals() {
+        if (board.getCell(0,0).getID() == board.getCell(1,1).getID() && board.getCell(1,1).getID() == board.getCell(2,2).getID())
+            return board.getCell(0,0).getID();
+
+        else if (board.getCell(0,2).getID() == board.getCell(1,1).getID() && board.getCell(1,1).getID() == board.getCell(2,0).getID())
+            return board.getCell(0,2).getID();
+
+        return -1;
     }
 
 }

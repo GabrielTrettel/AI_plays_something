@@ -6,21 +6,14 @@
 * This Source Code Form is subject to the terms of the BSD 3-Clause License.
 *******************************************************************************/
 
-import java.util.ArrayList;
-
 public class Board {
     private Cell[][] c = new Cell[3][3];
-    private int round;
     private int free_space;
-    private Player px, py;
 
 
-    public Board(Player px, Player py) {
-        round = 0;
+    public Board() {
         free_space = 9;
         c = fillBoard(c);
-        this.px = px;
-        this.py = py;
     }
 
 
@@ -32,30 +25,8 @@ public class Board {
         return c[x][y];
     }
 
-    public Player getHumanObj() {
-        if (!px.IsAi())
-            return px;
-        else if (!py.IsAi())
-            return py;
-
-        return null;
-    }
-
-    public Player getAiObj() {
-        if (px.IsAi())
-            return px;
-        else if (py.IsAi())
-            return py;
-
-        return null;
-    }
-
-    public void setMove(boolean p, int x, int y) {
-        if (p)
-            this.c[x][y].setOwnership(this.getAiObj());
-        else
-            this.c[x][y].setOwnership(this.getHumanObj());
-
+    public void setMove(Player p, int x, int y) {
+        this.c[x][y].setOwnership(p);
         this.free_space--;
     }
 
@@ -70,53 +41,6 @@ public class Board {
                 t[i][j] = new Cell();
 
         return t;
-    }
-
-    public Player checkWinner() {
-        int col = checkColumns();
-        int lin = checkLines();
-        int dia = checkDiagonals();
-
-        if (col == px.getID() || lin == px.getID() || dia == px.getID())
-            return px;
-        else if (col == py.getID() || lin == py.getID() || dia == py.getID())
-            return py;
-        else
-            return null;
-    }
-
-    // Verifica se algum jogador ganhou completando pelas colunas da matriz.
-    private int checkColumns() {
-        if (c[0][0].getID() == c[1][0].getID() && c[1][0].getID() == c[2][0].getID())
-            return c[0][0].getID();
-        else if (c[0][1].getID() == c[1][1].getID() && c[1][1].getID() == c[2][1].getID())
-            return c[0][1].getID();
-        else if (c[0][2].getID() == c[1][2].getID() && c[1][2].getID() == c[2][2].getID())
-            return c[0][2].getID();
-
-        return -1;
-    }
-
-    // Verifica se algum jogador ganhou completando pelas linhas da matriz
-    private int checkLines() {
-        if (c[0][0].getID() == c[0][1].getID() && c[0][1].getID() == c[0][2].getID())
-            return c[0][0].getID();
-        else if (c[1][0].getID() == c[1][1].getID() && c[1][1].getID() == c[1][2].getID())
-            return c[1][0].getID();
-        else if (c[2][0].getID() == c[2][1].getID() && c[2][1].getID() == c[2][2].getID())
-            return c[2][0].getID();
-
-        return -1;
-    }
-
-    // Verifica se algum jogador ganhou completando pelas diagonais da matriz
-    private int checkDiagonals() {
-        if (c[0][0].getID() == c[1][1].getID() && c[1][1].getID() == c[2][2].getID())
-            return c[0][0].getID();
-        else if (c[0][2].getID() == c[1][1].getID() && c[1][1].getID() == c[2][0].getID())
-            return c[0][2].getID();
-
-        return -1;
     }
 
     public void printGame(Player px, Player py) {

@@ -39,10 +39,11 @@ public class Player {
         return this.label;
     }
 
-    public int[] getMove(Board b) {
+    public int[] getMove(Rules game) {
         int[] moves = new int[2];
         moves[0] = this.getMoveX();
         moves[1] = this.getMoveY();
+
         return moves;
     }
 

@@ -6,10 +6,10 @@
 * This Source Code Form is subject to the terms of the BSD 3-Clause License.
 *******************************************************************************/
 
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Ai extends Player {
-    // this.level pertence ao intervalo [0, 3]
     private int level;
     private Random generator;
     private String name;
@@ -20,25 +20,27 @@ public class Ai extends Player {
         this.level = 0;
         this.generator = new Random();
         this.setLabel(p);
+        this.setLevel();
         this.setName();
     }
 
 
-    // Sobrescrita de método para se aproveitar do polimorfismo de player e Ai
     @Override
     public String getName() {
         return this.name;
     }
 
     @Override
-    public int[] getMove(Board board) {
+    public int[] getMove(Rules game) {
+        Board board = game.getBoard();
+
         float probability = this.generator.nextFloat();
         int[] moves;
 
         if ((this.level*5) > probability*15 || (this.level*5) == 20)
-            moves = board.getFreeCells()[ this.generator.nextInt( board.getFreeSpace()-1 ) ];
+            moves = board.getFreeCells()[ this.generator.nextInt(board.getFreeSpace()-1) ];
         else
-            moves = thinkBestMove(board);
+            moves = thinkBestMove(game);
 
         return moves;
     }
@@ -57,31 +59,25 @@ public class Ai extends Player {
             this.name = "Jerry Smith";
     }
 
-    @Override
-    public void setLabel(Player p) {
-        if (p.getLabel() == 'X')
-            this.label = 'O';
-        else
-            this.label = 'X';
-
-        setLevel();   // POG : Programação Orientada a Gambiarra
-    }
-
-
     private void setLevel() {
         int lvl;
         Scanner sc1 = new Scanner(System.in);
 
         do {
-            System.out.printf("Escolha o nível que voce quer jogar \n 0 -  Impossível  |  1 - Dificil  |  2 - Médio  |  3 - Fácil  |  4 - Modo hu3\n");
+            System.out.printf("Escolha o nível que voce quer jogar \n 0 -  Impossível  |  1 - Difícil  |  2 - Médio  |  3 - Fácil  |  4 - Aleatório\n");
             lvl = sc1.nextInt();
-            System.out.print("\33[1A\33[2K");
-            System.out.print("\33[1A\33[2K");
-            System.out.print("\33[1A\33[2K");
+            Rules.eraseBoard(3);
         } while (lvl < 0 || lvl > 4);
 
         this.level = lvl;
     }
+
+    /*
+    *      O array é embaralhado para aumentar a quantidade de jogadas distintas
+    *  entre as partidas. Isto acontece pois em estados mais iniciais algumas
+    *  jogadas tem o mesmo score, sendo o best_score a primeira jogada recebida
+    *  que possui este valor
+    */
     private int[][] shuffleArray(int[][] arr) {
         for(int i=0; i<arr.length; i++) {
             int index = generator.nextInt(i+1);
@@ -93,21 +89,17 @@ public class Ai extends Player {
         return arr;
     }
 
+    private int[] thinkBestMove(Rules game) {
+        Board board = game.getBoard();
 
-    private int[] thinkBestMove(Board board) {
         int[][] avaliableCells = shuffleArray(board.getFreeCells());
         int[] best_move = {-1, -1};
         Board new_board = board;
         int best_score = -1000;
 
-
         for (int[] move : avaliableCells) {
-            // System.out.printf("%d - %d\n", move[0], move[1]);
-
-            new_board.setMove(true, move[0], move[1]);
-
-            int move_score = minmax(new_board, 0, false);
-
+            new_board.setMove(game.getAiObj(), move[0], move[1]);
+            int move_score = minmax(game, 0, false);
             new_board.resetMove(move[0], move[1]);
 
             if (move_score > best_score) {
@@ -120,20 +112,28 @@ public class Ai extends Player {
         return best_move;
     }
 
-    private int currScore(Board board) {
-        if (board.checkWinner() == null)
+    private int currScore(Rules game) {
+        if (game.checkWinner() == null)
             return 0;
 
-        if (board.checkWinner().IsAi() == true)
+        if (game.checkWinner().IsAi() == true)
             return 10;
         else
             return -10;
     }
 
-    private int minmax(Board nboard, int depth, boolean is_max) {
-        Board board = nboard;
+    private int minmax(Rules game, int depth, boolean Ai_turn) {
+        Board board = game.getBoard();
 
-        int score = currScore(board);
+        int score = currScore(game);
+
+        /*
+         *        A profundidade é levada em conta para jogadas, mesmo que perdedoras,
+         *     desta forma, escolhemos sempre a que ganha mais rápido ou a que perde
+         *     mais devagar. Este comportamento é desejável para ganharmos de forma
+         *     mais eficiente ou então para carregarmos o jogo por mais tempo mesmo
+         *     que a derrota seja inevitável
+         */
 
         if (score == 10 || score == -10)
             return score - depth;
@@ -141,14 +141,14 @@ public class Ai extends Player {
         if (board.getFreeSpace() == 0)
             return 0 - depth;
 
-        if (is_max) {
+        if (Ai_turn) {
             int best = -1000;
 
             for (int x=0; x<3; ++x) {
                 for (int y=0; y<3; ++y) {
                     if (board.getCell(x, y).isEmpty()) {
-                        board.setMove(true, x, y);
-                        best = Math.max(minmax(board, depth+1, !is_max), best);
+                        board.setMove(game.getAiObj(), x, y);
+                        best = Math.max(minmax(game, depth+1, !Ai_turn), best);
                         board.resetMove(x, y);
                     }
                 }
@@ -161,8 +161,8 @@ public class Ai extends Player {
             for (int x=0; x<3; ++x) {
                 for (int y=0; y<3; ++y) {
                     if (board.getCell(x, y).isEmpty()) {
-                        board.setMove(false, x, y);
-                        best = Math.min(minmax(board, depth+1, !is_max), best);
+                        board.setMove(game.getHumanObj(), x, y);
+                        best = Math.min(minmax(game, depth+1, !Ai_turn), best);
                         board.resetMove(x, y);
                     }
                 }

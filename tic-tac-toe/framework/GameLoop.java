@@ -74,32 +74,31 @@ class GameLoop {
         Player py = game.getSecondPlayer();
 
         while (game.getGameStatus()) {
-            game.printBoard();
+            game.printConsole();
 
             // Jogador 1 faz a sua jogada.
             while (!game.makeMove(px));
 
-            game.eraseBoard();
-            game.printBoard();
-            // Verifica se jogador 1 ganhou.
-            if (!game.validate(px, py)) {
-                break;
-            }
+            game.eraseConsole();
+            game.printConsole();
 
-            game.eraseBoard();
-            game.printBoard();
+            // Verifica se jogador 1 ganhou.
+            if (!game.validate(px, py))
+                break;
+
+            game.eraseConsole();
+            game.printConsole();
 
             // Jogador 2 faz sua jogada.
             while (!game.makeMove(py));
+            game.eraseConsole();
+            game.printConsole();
 
-            game.eraseBoard();
-            game.printBoard();
             // Verifica se jogador 2 ganhou.
-            if (!game.validate(px, py)) {
+            if (!game.validate(px, py))
                 break;
-            }
 
-            game.eraseBoard();
+            game.eraseConsole();
         }
     }
 
@@ -113,10 +112,11 @@ class GameLoop {
             runGame(game);
 
             status = askIfContinue();
-            game.eraseBoard(9);
+            game.eraseConsole(9);
 
             if(status && !askIfSamePlayers())
                 ps = setPlayers();
+                
         } while (status);
     }
 
