@@ -62,8 +62,7 @@ public class Player {
         while (a>2 || a<0) {
             System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
-            System.out.print("\33[1A\33[2K");
-            System.out.print("\33[1A\33[2K");
+            rules.eraseConsole(2);
         }
         return a;
     }
@@ -72,13 +71,12 @@ public class Player {
         Scanner sc1 = new Scanner(System.in);
         System.out.printf("%s escolha a coluna: ", this.name);
         int a = sc1.nextInt();
-        System.out.print("\33[1A\33[2K");
+        rules.eraseConsole(1);
 
         while (a>2 || a<0) {
             System.out.printf("Jogada inválida. %s, por favor, repita o movimento desejado\n", this.getName());
             a = sc1.nextInt();
-            System.out.print("\33[1A\33[2K");
-            System.out.print("\33[1A\33[2K");
+            rules.eraseConsole(2);
         }
         return a;
     }
@@ -87,20 +85,19 @@ public class Player {
         Scanner sc1 = new Scanner(System.in);
         System.out.printf("Entre com o nome do jogador %d: ", this.player_id);
         this.name = sc1.nextLine();
-        System.out.print("\33[1A\33[2K");
+        rules.eraseConsole(1);
     }
 
     public void setLabel() {
         Scanner sc1 = new Scanner(System.in);
         System.out.printf("Jogador %d: X ou O? ", this.player_id);
         this.label = sc1.next().toUpperCase().charAt(0);
-        System.out.print("\33[1A\33[2K");
+        Srules.eraseConsole(1);
 
         while (this.label != 'X' && this.label != 'O') {
             System.out.printf("Peça inválida. %s, por favor, escolha novamente\n", this.getName());
             this.label = sc1.next().toUpperCase().charAt(0);
-            System.out.print("\33[1A\33[2K");
-            System.out.print("\33[1A\33[2K");
+            rules.eraseConsole(2);
         }
     }
 
