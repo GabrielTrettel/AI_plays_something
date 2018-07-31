@@ -38,7 +38,7 @@ public class Ai extends Player {
         int[] moves;
 
         if ((this.level*5) > probability*15 || (this.level*5) == 20)
-            moves = board.getFreeCells()[ this.generator.nextInt(board.getFreeSpace()-1) ];
+            moves = board.getFreeCells()[ this.generator.nextInt(board.getFreeSpace()) ];
         else
             moves = thinkBestMove(game);
 
@@ -66,7 +66,7 @@ public class Ai extends Player {
         do {
             System.out.printf("Escolha o nível que voce quer jogar \n 0 -  Impossível  |  1 - Difícil  |  2 - Médio  |  3 - Fácil  |  4 - Aleatório\n");
             lvl = sc1.nextInt();
-            Rules.eraseBoard(3);
+            Rules.eraseConsole(3);
         } while (lvl < 0 || lvl > 4);
 
         this.level = lvl;

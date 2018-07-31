@@ -23,6 +23,12 @@ public class Player {
     }
 
 
+    private static int returnID() {
+        int aux = global_id;
+        global_id = global_id+1;
+        return aux;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -75,12 +81,6 @@ public class Player {
             System.out.print("\33[1A\33[2K");
         }
         return a;
-    }
-
-    private static int returnID() {
-        int aux = global_id;
-        global_id = global_id+1;
-        return aux;
     }
 
     public void setName() {

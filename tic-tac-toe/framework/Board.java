@@ -44,7 +44,7 @@ public class Board {
     }
 
     public void printGame(Player px, Player py) {
-        System.out.println(":  0    1    2");
+        System.out.println(":    0   1   2");
         System.out.printf(":---------------             ");
         ScoreBoard.ImprimirScoreBoard(px, py);
         System.out.printf("\n:0 | %c | %c | %c |\n", c[0][0].getLabel(), c[0][1].getLabel(), c[0][2].getLabel());
