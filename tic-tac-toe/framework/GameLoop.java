@@ -1,6 +1,6 @@
 /*******************************************************************************
 * Copyright (c) 2018, Gabriel M. Trettel, Eric S. Karbstein,
-* Lucas Z. de Oliveira, ddom
+* Lucas Z. de Oliveira, Daniel de O. Montenegro
 * All rights reserved.
 *
 * This Source Code Form is subject to the terms of the BSD 3-Clause License.
@@ -77,7 +77,7 @@ class GameLoop {
             game.printConsole();
 
             // Jogador 1 faz a sua jogada.
-            while (!game.makeMove(px));
+            while (!game.takeMoveFromPlayer(px));
 
             game.eraseConsole();
             game.printConsole();
@@ -90,7 +90,7 @@ class GameLoop {
             game.printConsole();
 
             // Jogador 2 faz sua jogada.
-            while (!game.makeMove(py));
+            while (!game.takeMoveFromPlayer(py));
             game.eraseConsole();
             game.printConsole();
 
@@ -116,7 +116,7 @@ class GameLoop {
 
             if(status && !askIfSamePlayers())
                 ps = setPlayers();
-                
+
         } while (status);
     }
 

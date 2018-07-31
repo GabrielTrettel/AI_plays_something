@@ -1,6 +1,6 @@
 /*******************************************************************************
 * Copyright (c) 2018, Gabriel M. Trettel, Eric S. Karbstein,
-* Lucas Z. de Oliveira, ddom
+* Lucas Z. de Oliveira, Daniel de O. Montenegro
 * All rights reserved.
 *
 * This Source Code Form is subject to the terms of the BSD 3-Clause License.
@@ -60,7 +60,7 @@ public class Rules {
         return null;
     }
 
-    public boolean makeMove(Player p) {
+    public boolean takeMoveFromPlayer(Player p) {
         int[] cord = p.getMove(this);
 
         if (!checkMove( board, cord[0], cord[1] ))
