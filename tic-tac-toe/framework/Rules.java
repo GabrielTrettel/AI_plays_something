@@ -77,18 +77,6 @@ public class Rules {
             return true;
     }
 
-    // Apaga as linhas já escritas no console.
-    public static void eraseConsole() {
-        for (int x=0; x<8; ++x)
-            System.out.print("\33[1A\33[2K");
-    }
-
-    // Apaga uma quantidade 'i' de linhas já escritas no console.
-    public static void eraseConsole(int i) {
-        for (int x=0; x<i; ++x)
-            System.out.print("\33[1A\33[2K");
-    }
-
     public boolean validate(Player px, Player py) {
         Player winner = this.checkWinner();
         if (winner != null) {
@@ -111,6 +99,18 @@ public class Rules {
 
     public void printConsole() {
         board.printGame(this.px, this.py);
+    }
+
+    // Apaga as linhas já escritas no console.
+    public static void eraseConsole() {
+        for (int x=0; x<8; ++x)
+            System.out.print("\33[1A\33[2K");
+    }
+
+    // Apaga uma quantidade 'i' de linhas já escritas no console.
+    public static void eraseConsole(int i) {
+        for (int x=0; x<i; ++x)
+            System.out.print("\33[1A\33[2K");
     }
 
     public Player checkWinner() {

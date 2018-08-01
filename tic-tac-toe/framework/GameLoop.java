@@ -14,7 +14,7 @@ class GameLoop {
     public static boolean askIfAi() {
         System.out.printf("Jogar contra computador? [s/N] ");
         char ans = sc.next().toLowerCase().charAt(0);
-        System.out.print("\33[1A\33[2K");
+        Rules.eraseConsole(1);
 
         if (ans == 's')
             return true;
@@ -25,7 +25,7 @@ class GameLoop {
     public static boolean askIfContinue() {
         System.out.printf("Continue? [s/N] ");
         char ans = sc.next().toLowerCase().charAt(0);
-        System.out.print("\33[1A\33[2K");
+        Rules.eraseConsole(1);
 
         if (ans == 's')
             return true;
@@ -36,7 +36,7 @@ class GameLoop {
     public static boolean askIfSamePlayers() {
         System.out.printf("São os mesmos jogadores? [s/N] ");
         char ans = sc.next().toLowerCase().charAt(0);
-        System.out.print("\33[1A\33[2K");
+        Rules.eraseConsole(1);
 
         if (ans == 's')
             return true;
@@ -112,6 +112,8 @@ class GameLoop {
             runGame(game);
 
             status = askIfContinue();
+
+            // Limpa o console após o termino da rodada do jogo.
             game.eraseConsole(9);
 
             if(status && !askIfSamePlayers())

@@ -76,7 +76,7 @@ public class Ai extends Player {
     *      O array é embaralhado para aumentar a quantidade de jogadas distintas
     *  entre as partidas. Isto acontece pois em estados mais iniciais algumas
     *  jogadas tem o mesmo score, sendo o best_score a primeira jogada recebida
-    *  que possui este valor
+    *  que possui este valor.
     */
     private int[][] shuffleArray(int[][] arr) {
         for(int i=0; i<arr.length; i++) {
@@ -128,11 +128,11 @@ public class Ai extends Player {
         int score = currScore(game);
 
         /*
-         *        A profundidade é levada em conta para jogadas, mesmo que perdedoras,
-         *     desta forma, escolhemos sempre a que ganha mais rápido ou a que perde
-         *     mais devagar. Este comportamento é desejável para ganharmos de forma
-         *     mais eficiente ou então para carregarmos o jogo por mais tempo mesmo
-         *     que a derrota seja inevitável
+         *      A profundidade é levada em conta para jogadas, mesmo que perdedoras,
+         *  desta forma, escolhemos sempre a que ganha mais rápido ou a que perde
+         *  mais devagar. Este comportamento é desejável para ganharmos de forma
+         *  mais eficiente ou então para carregarmos o jogo por mais tempo mesmo
+         *  que a derrota seja inevitável
          */
 
         if (score == 10 || score == -10)

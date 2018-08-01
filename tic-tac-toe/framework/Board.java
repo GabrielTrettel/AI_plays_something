@@ -55,6 +55,10 @@ public class Board {
         System.out.println(":---------------");
     }
 
+    /*
+    *       Esta função retorna as posições livres para que o algoritmo minmax
+    *  saiba onde testar as possíveis jogadas.
+    */
     public int[][] getFreeCells() {
         int[][] free_cells = new int[this.free_space][2];
 
